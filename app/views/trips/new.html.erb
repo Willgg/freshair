@@ -1,0 +1,5 @@
+<%= form_tag('trips', method: 'get') do %>
+  <%= label_tag(:q, "Search for:") %>
+  <%= text_field_tag(:iata_code) %>
+  <%= submit_tag("Search") %>
+<% end %>

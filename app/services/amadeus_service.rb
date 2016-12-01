@@ -22,10 +22,10 @@ class AmadeusService
     uri = uri + '&' + 'departure_date=' + @departure_date unless @departure_date.blank?
     uri = uri + '&' + 'direct=' + @direct.to_s unless @direct.blank?
     uri = uri + '&' + 'destination=' + @destination unless @destination.blank?
-    puts uri
+    uri = uri + '&' + 'duration=' + @duration.to_s unless @duration.blank?
     result = open(uri).read
     result_json = JSON.parse(result)
-    puts result_json
+    return result_json
   end
 
   def get_low_fare(options = {})
@@ -37,10 +37,9 @@ class AmadeusService
     uri = uri + '&' + 'destination=' + @destination + 'departure_date=' + @departure_date
     uri = uri + '&' + 'direct=' + @direct.to_s unless @direct.blank?
     uri = uri + '&' + 'duration=' + @duration.to_s unless @duration.blank?
-    puts uri
     result = open(uri).read
     result_json = JSON.parse(result)
-    puts result_json
+    return result_json
   end
 
 end
