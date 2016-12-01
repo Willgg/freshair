@@ -1,0 +1,5 @@
+<%= params[:iata_code] %><br />
+<%= @result['results'].first['destination'] %><br />
+<%= @result['results'].first['price'] + '€' %>
+
+<% # {"destination"=>"TRN", "departure_date"=>"2017-01-11", "return_date"=>"2017-01-16", "price"=>"59.03", "airline"=>"AF"} %>
