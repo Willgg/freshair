@@ -1,5 +1,10 @@
 <%= form_tag('trips', method: 'get') do %>
-  <%= label_tag(:q, "Search for:") %>
-  <%= text_field_tag(:iata_code) %>
-  <%= submit_tag("Search") %>
+  <%= label_tag(:iata_code, "Search for:") %>
+  <%= text_field_tag(:iata_code) %><br />
+  <%= label_tag(:date, "Date:") %>
+  <%= text_field_tag :departure_date, nil, value: '2016-12-27', placeholder: 'YYYY-mm-dd' %><br />
+  <%= label_tag(:duration, "Durée:") %>
+  <%= select_tag(:duration, '<option value="2">2 jours</option><option value="3">3 jours</option>'.html_safe) %>
+  <br />
+  <%= submit_tag("Let's get fresh air") %>
 <% end %>

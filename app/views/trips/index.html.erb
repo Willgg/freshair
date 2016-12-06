@@ -1,5 +1,12 @@
-<%= params[:iata_code] %><br />
-<%= @result['results'].first['destination'] %><br />
-<%= @result['results'].first['price'] + '€' %>
-
-<% # {"destination"=>"TRN", "departure_date"=>"2017-01-11", "return_date"=>"2017-01-16", "price"=>"59.03", "airline"=>"AF"} %>
+<p>Résultats depuis : <%= params[:iata_code] %><p>
+<ul>
+  <% @result['results'].each do |result| %>
+    <li>
+      <%= result['destination'] %><br />
+      <%= result['departure_date'] %><br />
+      <%= result['return_date'] %><br />
+      <%= result['airline'] %><br />
+      <%= result['price'] + '€' %>
+    </li>
+  <% end %>
+</ul>
