@@ -35,5 +35,9 @@ module Freshair
 
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
+
+    config.cache_store = :redis_store, 'redis://localhost:300/0/cache', { expires_in: 5.minutes }
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end

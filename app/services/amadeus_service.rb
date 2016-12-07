@@ -1,7 +1,9 @@
 require 'json'
+require 'csv'
 require 'open-uri'
 
 class AmadeusService
+
   attr_accessor :origin, :destination, :departure_date, :one_way, :duration, :direct, :max_price, :aggregation_mode
 
   def initialize(origin, options = {})
@@ -40,6 +42,48 @@ class AmadeusService
     result = open(uri).read
     result_json = JSON.parse(result)
     return result_json
+  end
+
+  def self.list_supported_origins(*currencies)
+    data = {}
+    url = 'https://raw.githubusercontent.com/amadeus-travel-innovation-sandbox/sandbox-content/master/flight-search-cache-origin-destination.csv'
+    CSV.new(open(url)).each do |row|
+      if currencies.any? && currencies.include?(row[0])
+        data[row[0]] = [] unless data.key?(row[0])
+        data[row[0]] << row[1] unless data[row[0]].include?(row[1])
+      elsif currencies.empty?
+        data[row[0]] = [] unless data.key?(row[0])
+        data[row[0]] << row[1] unless data[row[0]].include?(row[1])
+      end
+    end
+    return data
+  end
+
+  # TODO: move this method into job and add airbnb scrapping result to
+  def self.build_city_flights(currencies)
+    departure_dates = [date_of_next('Friday').to_s, date_of_next('Saturday').to_s]
+    duration = [2, 3]
+    list_supported_origins(currencies).values.flatten.each do |airport|
+      city_flights = {}
+      departure_dates.each do |date|
+        city_flights[date] = {}
+        duration.each do |duration|
+          results = AmadeusService.new(airport, departure_date: date, duration: duration, direct: true).get_inspiration
+          unless !results['status'].nil? && results['status'] == '400'
+            city_flights[date][duration] = results
+          end
+        end
+      end
+      $redis.set(airport, city_flights.to_json)
+    end
+  end
+
+  private
+
+  def self.date_of_next(day)
+    date  = Date.parse(day)
+    delta = date > Date.current ? 0 : 7
+    date + delta
   end
 
 end

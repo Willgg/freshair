@@ -9,10 +9,25 @@
 require 'csv'
 require 'open-uri'
 
-def fetch_origin
+def list_amadeus_airports(*currencies)
+  puts "START PARSING CSV..."
+  url = 'https://raw.githubusercontent.com/amadeus-travel-innovation-sandbox/sandbox-content/master/flight-search-cache-origin-destination.csv'
+  airports = []
+  CSV.new(open(url)).each do |row|
+    if currencies.include?(row[0])
+      airports << row[1] unless airports.include?(row[1])
+      airports << row[2] unless airports.include?(row[2])
+    end
+  end
+  puts '################## Amadeus airports ##################'
+  puts airports.inspect
+  return airports
+end
+
+def create_airports(authorized_airports)
   url = 'https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat'
   CSV.new(open(url)).each do |line|
-    if line[3] == 'France'
+    if authorized_airports.include?(line[4])
       unless City.where(name: line[2]).exists?
         city = City.new(name: line[2], country: line[3])
         city.save
@@ -26,6 +41,9 @@ def fetch_origin
   end
 end
 
+
 Airport.destroy_all
 City.destroy_all
-fetch_origin
+
+authorized_airports = list_amadeus_airports('EUR', 'GBP')
+create_airports(authorized_airports)
