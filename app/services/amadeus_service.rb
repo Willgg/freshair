@@ -75,19 +75,32 @@ class AmadeusService
     return data
   end
 
+  def self.list_destinations(*currencies)
+    destinations = []
+    url = 'https://raw.githubusercontent.com/amadeus-travel-innovation-sandbox/sandbox-content/master/flight-search-cache-origin-destination.csv'
+    CSV.new(open(url)).each do |row|
+      if ( !destinations.include?(row[2]) && currencies.include?(row[0]) )
+        destinations << row[2]
+      end
+    end
+    return destinations
+  end
 
   # TODO: move this method into job and add airbnb scrapping result to
   def build_trips(currencies)
     # TODO these variables must be put in app config
     departure_dates = [date_of_next('Friday').to_s, date_of_next('Saturday').to_s]
     duration = [2, 3]
-    nb_people_list = (2..4)
+    nb_people_list = (2..3)
     airbnb = {}
     # TODO: Call one job per airport so if scrapping fails that will be scheduled for later
     list_origins(currencies).values.flatten.each do |origin|
       trips = {}
       departure_dates.each do |date|
+
         trips[date] = {}
+        airbnb[date] = {} if airbnb[date].nil?
+
         duration.each do |duration|
 
           # Fetch Flights from Amadeus
@@ -103,37 +116,31 @@ class AmadeusService
           end
 
           # Scrap every destinations on Airbnb
-          # destinations.each do |destination|
-          #   nb_people_list.each do |people|
-          #     checkin  = date.to_date
-          #     checkout = date.to_date + (duration.days)
-          #     begin
-          #       price = (AirbnbScrapping.new(origin, checkin, checkout, people).scrap_price) / people
-          #     rescue
-          #       price = ''
-          #     end
-          #     sleep 5
-          #     trips[date][duration][people] = { average_price: price }
-          #   end
-          # end
+          airbnb[date][duration] = {} if airbnb[date][duration].nil?
 
-          # Add Airbnb result from scrapping
-          # trips[date][duration][:airbnb] = {}
-          # nb_people_list.each do |people|
-          #   checkin  = date.to_date
-          #   checkout = date.to_date + (duration.days)
-          #   begin
-          #     price = AirbnbScrapping.new(origin, checkin, checkout, people).scrap_price
-          #   rescue
-          #     price = ''
-          #   end
-          #   sleep 5
-          #   trips[date][duration][:airbnb][people] = { average_price: price }
-          # end
+          destinations.each do |destination|
+            airbnb[date][duration][destination] = {} if airbnb[date][duration][destination].nil?
+            nb_people_list.each do |people|
+              checkin  = date.to_date
+              checkout = date.to_date + (duration.days)
+              begin
+                price = (AirbnbScrapping.new(destination, checkin, checkout, people).scrap_price) / people
+                price = price.round(2)
+              rescue
+                price = ''
+              end
+              sleep 6
+              airbnb[date][duration][destination][people] = price
+              puts airbnb
+            end
+          end
+
         end
       end
+      puts trips
+      puts airbnb
       # $redis.set(origin, trips.to_json)
-      puts "##### End of destination case ####"
+      puts "############### End of origin case ##############"
     end
   end
 
