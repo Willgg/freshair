@@ -29,7 +29,6 @@ class AirbnbScrapping
     prices = []
     html_doc.search('.avg-price .price').each do |element|
       prices << element.text.scan(/[0-9]+/).join.to_f.round(2)
-      # puts element.attribute('href')
     end
     return convert_currencies('USD', 'EUR', prices.first)
   end
