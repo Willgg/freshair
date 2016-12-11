@@ -17,13 +17,13 @@ class AirbnbScrapping
   end
 
   def scrap_price
-    uri = @url + @city.name + '--' + @city.country
+    uri = @url + clean(@city.name) + '--' + clean(@city.country)
     uri = uri + '?' + 'adults=' + @adults.to_s
     uri = uri + '&' + 'checkin=' + CGI.escape(@checkin_date.strftime('%d/%m/%Y'))
     uri = uri + '&' + 'checkout=' + CGI.escape(@checkout_date.strftime('%d/%m/%Y'))
     uri = uri + '&room_types%5B%5D=Entire%20home%2Fapt' if @entire_home
     puts uri
-    puts Scraper::user_agents.sample
+
     html_file = open(uri, 'User-Agent' => Scraper::user_agents.sample)
     html_doc = Nokogiri::HTML(html_file)
 
@@ -32,5 +32,12 @@ class AirbnbScrapping
       prices << element.text.scan(/[0-9]+/).join.to_f.round(2)
     end
     return convert_currencies('USD', 'EUR', prices.first)
+  end
+
+  private
+
+  def clean(name)
+    name = name.gsub(/\s/, '-')
+    name = name.gsub(/St./, 'Saint')
   end
 end
