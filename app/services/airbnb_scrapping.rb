@@ -23,7 +23,8 @@ class AirbnbScrapping
     uri = uri + '&' + 'checkout=' + CGI.escape(@checkout_date.strftime('%d/%m/%Y'))
     uri = uri + '&room_types%5B%5D=Entire%20home%2Fapt' if @entire_home
     puts uri
-    html_file = open(uri, 'User-Agent' => 'botnet')
+    puts Scraper::user_agents.sample
+    html_file = open(uri, 'User-Agent' => Scraper::user_agents.sample)
     html_doc = Nokogiri::HTML(html_file)
 
     prices = []

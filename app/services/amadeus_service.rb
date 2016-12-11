@@ -45,9 +45,20 @@ class AmadeusService
     return result_json
   end
 
+  def list_currencies
+    currencies = []
+    url = AmadeusService.url_supported_flights
+    CSV.new(open(url)).each do |row|
+      unless currencies.include?(row[0])
+        currencies << row[0]
+      end
+    end
+    return currencies
+  end
+
   def list_origins(*currencies)
     data = {}
-    url = 'https://raw.githubusercontent.com/amadeus-travel-innovation-sandbox/sandbox-content/master/flight-search-cache-origin-destination.csv'
+    url = AmadeusService.url_supported_flights
     CSV.new(open(url)).each do |row|
       if currencies.any? && currencies.include?(row[0])
         data[row[0]] = [] unless data.key?(row[0])
@@ -62,7 +73,7 @@ class AmadeusService
 
   def list_origins_destinations(*currencies)
     data = {}
-    url = 'https://raw.githubusercontent.com/amadeus-travel-innovation-sandbox/sandbox-content/master/flight-search-cache-origin-destination.csv'
+    url = AmadeusService.url_supported_flights
     CSV.new(open(url)).each do |row|
       data[row[0]] = {} unless data.key?(row[0])
       unless data[row[0]].key?(row[1])
@@ -77,13 +88,15 @@ class AmadeusService
 
   def self.list_destinations(*currencies)
     destinations = []
-    url = 'https://raw.githubusercontent.com/amadeus-travel-innovation-sandbox/sandbox-content/master/flight-search-cache-origin-destination.csv'
+    url = AmadeusService.url_supported_flights
     CSV.new(open(url)).each do |row|
-      if ( !destinations.include?(row[2]) && currencies.include?(row[0]) )
+      if currencies.any? && currencies.include?(row[0])
+        destinations << row[2]
+      elsif currencies.empty?
         destinations << row[2]
       end
     end
-    return destinations
+    return destinations.uniq
   end
 
   # TODO: move this method into job and add airbnb scrapping result to
@@ -155,4 +168,7 @@ class AmadeusService
     return selection
   end
 
+  def self.url_supported_flights
+    'https://raw.githubusercontent.com/amadeus-travel-innovation-sandbox/sandbox-content/master/flight-search-cache-origin-destination.csv'
+  end
 end
