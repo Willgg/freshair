@@ -1,6 +1,6 @@
 module Scraper
-  PEOPLE = [1, 2]
-  DURATIONS = [2, 3]
+  PEOPLE = [1]
+  DURATIONS = [2]
   CURRENCIES = ['EUR', 'GBP', 'CSK']
   AIRPORTS = { 'AL' => ['TIA'],
       'DE' => ['TXL', 'DRS', 'FRA', 'HAM', 'MUC', 'STR', 'DUS', 'CGN'],
@@ -56,6 +56,7 @@ module Scraper
   end
 
   def self.european_airports
-    AIRPORTS.values.flatten && AmadeusService.list_destinations(CURRENCIES)
+    #TODO: currencies are statics !
+    AIRPORTS.values.flatten & AmadeusService.list_destinations(CURRENCIES[0], CURRENCIES[1], CURRENCIES[2])
   end
 end

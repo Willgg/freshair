@@ -14,36 +14,40 @@ def list_amadeus_airports(*currencies)
   url = 'https://raw.githubusercontent.com/amadeus-travel-innovation-sandbox/sandbox-content/master/flight-search-cache-origin-destination.csv'
   airports = []
   CSV.new(open(url)).each do |row|
-    if currencies.include?(row[0])
+    if currencies.any? && currencies.include?(row[0])
       airports << row[1] unless airports.include?(row[1])
       airports << row[2] unless airports.include?(row[2])
+    elsif currencies.empty?
+      airports << row[1]
+      airports << row[2]
     end
   end
-  puts '################## Amadeus airports ##################'
+  airports.uniq!
   puts airports.inspect
   return airports
 end
 
-def create_airports(authorized_airports)
+def create_airports(airports)
   url = 'https://raw.githubusercontent.com/jpatokal/openflights/master/data/airports.dat'
-  CSV.new(open(url)).each do |line|
-    if authorized_airports.include?(line[4])
-      unless City.where(name: line[2]).exists?
+  list = CSV.new(open(url)).to_a
+  missing = []
+  airports.each do |airport|
+    line = list.select { |row| row[4] == airport}
+    line = line.flatten
+    if line.empty?
+      missing << airport
+    else
+      city = City.find_by(name: line[2])
+      if city.nil?
         city = City.new(name: line[2], country: line[3])
-        city.save
-      else
-        city = City.where(name: line[2]).first
+        puts city.errors.messages unless city.save
       end
       airport = Airport.new(name: line[1], iata: line[4], icao: line[5])
       airport.city = city
-      airport.save
+      puts airport.errors.messages unless airport.save
     end
   end
+  puts "AIRPORTS MISSING IN DATABASE: " + missing.inspect
 end
 
-
-Airport.destroy_all
-City.destroy_all
-
-authorized_airports = list_amadeus_airports('EUR', 'GBP')
-create_airports(authorized_airports)
+create_airports(list_amadeus_airports('EUR', 'GBP', 'CSK'))
