@@ -30,6 +30,7 @@ namespace :airbnb do
             price   = request.scrap_price
             price_person = (price / adults).round(2)
             results[destination][date][duration][adults] = price_person
+            puts price_person
             puts ''
             sleep [5, 6, 7, 8, 9, 10].sample
           end

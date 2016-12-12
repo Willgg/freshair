@@ -20,7 +20,7 @@
           <%= label_tag(:duration, "How many days") %>
           <%= select_tag(:duration, options_for_select(Scraper::DURATIONS.map { |d| [d.to_s + ' days', d] }), class: 'form-control') %>
         </div>
-        <%= submit_tag("Let's get some Freshaair", class: 'btn btn-success btn-block') %>
+        <%= submit_tag("Let's get some Freshair", class: 'btn btn-success btn-block') %>
       <% end %>
       </div>
     </div>

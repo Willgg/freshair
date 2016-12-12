@@ -8,6 +8,9 @@
     background-color: #904e95;
     color: #fff;
     border: none;
+    text-transform: uppercase;
+    line-height: 30px;
+    font-size: 11px;
     &:hover {
       background-color: darken($brand-secondary, 10%);
     }
@@ -49,15 +52,33 @@
   }
   .flight-price, .housing-price {
     font-size: 40px;
+    line-height: 45px;
     width: 27%;
     margin: 0 0 0 8%;
     text-align: center;
     margin: 0 0 0 6%;
     color: #aaa;
   }
+  .total-section {
+    align-items: center;
+    padding-bottom: 30px;
+  }
+  .total-price {
+    font-size: 50px;
+    line-height: 38px;
+  }
   .logo {
+    margin: 0 40px;
     width: 50px;
     height: 50px;
     background-size: cover;
+  }
+  .fa {
+    color: $brand-primary;
+    cursor: pointer;
+    font-size: 26px;
+  }
+  .inactive {
+    display: none;
   }
 }
