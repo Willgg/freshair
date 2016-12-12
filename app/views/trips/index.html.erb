@@ -8,6 +8,9 @@
       <div class="trips-card">
         <div class="trips-card-head">
           <h3><%= Airport.find_by(iata: @flight['destination']).city.name %></h3>
+          <div class="total-price">
+            <%= @flight['airbnb']['1'].to_i + @flight['price'].to_i %>&euro;
+          </div>
         </div>
         <div class="trips-card-content">
           <div class="flight-section">
@@ -32,15 +35,19 @@
           </div>
           <div class="housing-section">
               <div class="housing-details">
-                <%= params[:people] %>
+                <div style="flex: 1">
+                  <%= (params[:people]) %><%= '1 people' if params[:people].nil? %>
+                </div>
+                <div class="logo" style='flex: 1; background-image: url(<%= image_url 'airbnb' %>)'></div>
+                <div style="flex: 1">
+                  Entire Home rental<br />
+                  <small>Prices updated</small>
+                </div>
               </div>
               <div class="housing-price">
                 <%= @flight['airbnb']['1'].to_i %>&euro;
                 <div class="btn btn-success">Book now</div>
               </div>
-          </div>
-          <div class='total-section'>
-            <%= @flight['airbnb']['1'].to_i + @flight['price'].to_i %>&euro;
           </div>
         </div>
       </div>
