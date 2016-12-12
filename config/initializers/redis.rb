@@ -1,3 +1,5 @@
+$redis = Redis.new
+
 url = ENV["REDISCLOUD_URL"]
 
 if url
@@ -9,6 +11,4 @@ if url
     config.redis = { url: url }
   end
   $redis = Redis.new(:url => url)
-else
-  $redis = Redis::Namespace.new("freshair", :redis => Redis.new)
 end
