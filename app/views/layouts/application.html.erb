@@ -4,13 +4,17 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>TODO</title>
+    <%= favicon_link_tag %>
+    <%= favicon_link_tag 'freshair-favicon.png', rel: 'icon', type: 'image/png' %>
+    <title><%= yield(:title).presence || "Freshair - Find the Cheapest Next Weekend Break" %></title>
     <%= csrf_meta_tags %>
-    
+
     <%= stylesheet_link_tag    'application', media: 'all' %>
   </head>
-  <body>
+  <body class='<%= "#{params[:controller]}-#{params[:action]}".gsub('/', '-') %>'>
+    <%= render 'shared/navbar' %>
     <%= yield %>
+    <%= render 'shared/footer' %>
     <%= javascript_include_tag 'application' %>
   </body>
 </html>
