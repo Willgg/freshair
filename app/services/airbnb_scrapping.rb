@@ -5,7 +5,7 @@ require 'nokogiri'
 class AirbnbScrapping
   include ServicesHelper
 
-  attr_accessor :checkin_date, :checkout_date, :adults, :entire_home
+  attr_accessor :city, :checkin_date, :checkout_date, :adults, :entire_home
 
   def initialize(iata, checkin, checkout, nb_adults, entire_home=true)
     @city = Airport.where(iata: iata).first.city
@@ -31,6 +31,7 @@ class AirbnbScrapping
     html_doc.search('.avg-price .price').each do |element|
       prices << element.text.scan(/[0-9]+/).join.to_f.round(2)
     end
+    #TODO: verify if the scraped price is USD
     return convert_currencies('USD', 'EUR', prices.first)
   end
 

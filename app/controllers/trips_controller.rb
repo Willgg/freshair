@@ -3,8 +3,11 @@ class TripsController < ApplicationController
     options = {}
     options[:departure_date] = params[:departure_date] if params[:departure_date]
     options[:duration] = params[:duration] if params[:duration]
-    service = AmadeusService.new(params[:iata_code],options)
-    @result  = service.get_inspiration
+    @flights = JSON.parse($redis.get(params[:iata_code]))
+    @flights = @flights[options[:departure_date]][options[:duration]]
+    raise
+    # service = AmadeusService.new(params[:iata_code],options)
+    # @result  = service.get_inspiration
   end
 
   def new
