@@ -56,7 +56,8 @@ class AmadeusService
     return currencies
   end
 
-  def list_origins(*currencies)
+  def self.list_origins(*currencies)
+    currencies.flatten!
     data = {}
     url = AmadeusService.url_supported_flights
     CSV.new(open(url)).each do |row|
@@ -100,60 +101,36 @@ class AmadeusService
   end
 
   # TODO: move this method into job and add airbnb scrapping result to
-  def build_trips(currencies)
-    # TODO these variables must be put in app config
-    departure_dates = [date_of_next('Friday').to_s, date_of_next('Saturday').to_s]
-    duration = [2, 3]
-    nb_people_list = (2..3)
-    airbnb = {}
-    # TODO: Call one job per airport so if scrapping fails that will be scheduled for later
-    list_origins(currencies).values.flatten.each do |origin|
+  def build_trips(*currencies)
+    departure_dates = [Scraper::date_of_next('Friday').to_s, Scraper::date_of_next('Saturday').to_s]
+    duration = Scraper::DURATIONS
+    airbnb   = JSON.parse($redis.get('airbnb'))
+
+    AmadeusService.list_origins(currencies).values.flatten.each do |origin|
       trips = {}
       departure_dates.each do |date|
-
         trips[date] = {}
-        airbnb[date] = {} if airbnb[date].nil?
 
         duration.each do |duration|
-
-          # Fetch Flights from Amadeus
           flights = AmadeusService.new(origin, departure_date: date, duration: duration, direct: true).get_inspiration
-          # Add Amadeus flights to Trips
           unless !flights['status'].nil? && flights['status'] == '400'
+
+            # Keep only destinations included in Airbnb Scraping
+            flights['results'].reject! { |flight| airbnb[flight['destination']].nil? }
+
+            # Add Airbnb price to every destination
+            flights['results'].each do |flight|
+              destination = flight['destination']
+              if airbnb[destination]
+                flight['airbnb'] = airbnb[destination][flight['departure_date']][duration.to_s]
+              end
+            end
+
             trips[date][duration] = flights
           end
-          # List the destinations to scrap with Airbnb
-          destinations = []
-          flights['results'].each do |flight|
-            destinations << flight['destination'] unless destinations.include?(flight['destination'])
-          end
-
-          # Scrap every destinations on Airbnb
-          airbnb[date][duration] = {} if airbnb[date][duration].nil?
-
-          destinations.each do |destination|
-            airbnb[date][duration][destination] = {} if airbnb[date][duration][destination].nil?
-            nb_people_list.each do |people|
-              checkin  = date.to_date
-              checkout = date.to_date + (duration.days)
-              begin
-                price = (AirbnbScrapping.new(destination, checkin, checkout, people).scrap_price) / people
-                price = price.round(2)
-              rescue
-                price = ''
-              end
-              sleep 6
-              airbnb[date][duration][destination][people] = price
-              puts airbnb
-            end
-          end
-
         end
       end
-      puts trips
-      puts airbnb
-      # $redis.set(origin, trips.to_json)
-      puts "############### End of origin case ##############"
+      $redis.set(origin, trips.to_json)
     end
   end
 
