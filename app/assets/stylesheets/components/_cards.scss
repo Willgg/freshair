@@ -1,0 +1,60 @@
+.trips-card{
+  background: #FFF;
+  border-radius: 8px;
+  .btn-success, .btn-success:focus, .btn-success:active {
+    background-color: #904e95;
+    color: #fff;
+    border: none;
+    &:hover {
+      background-color: darken($brand-secondary, 10%);
+    }
+  }
+  .trips-card-head {
+    border-radius: 8px 8px 0 0;
+    padding: 15px 30px;
+    h3 {
+      text-align: center;
+      margin: 0;
+    }
+  }
+  .trips-card-content {
+    border-radius: 0 0 8px 8px;
+    padding: 0;
+    h4 {
+      font-size: 60px;
+      line-height: 50px;
+      margin: 0;
+    }
+    small{
+      text-transform: uppercase;
+      font-size: 12px;
+      color: #aaa;
+    }
+  }
+  .flight-section, .housing-section, .total-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-top: 1px solid #f1f1f1;
+  }
+  .flight-details, .housing-details {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .flight-price, .housing-price {
+    font-size: 40px;
+    width: 27%;
+    margin: 0 0 0 8%;
+    text-align: center;
+    margin: 0 0 0 6%;
+    color: #aaa;
+  }
+  .logo {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+  }
+}

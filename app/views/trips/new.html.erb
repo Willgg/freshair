@@ -1,10 +1,28 @@
-<%= form_tag('trips', method: 'get') do %>
-  <%= label_tag(:iata_code, "From:") %>
-  <%= select_tag(:iata_code, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }) ) %><br />
-  <%= label_tag(:departure_date, "Date:") %>
-  <%= text_field_tag :departure_date, nil, value: '2016-12-27', placeholder: 'YYYY-mm-dd' %><br />
-  <%= label_tag(:duration, "How long:") %>
-  <%= select_tag(:duration, options_for_select(Scraper::DURATIONS)) %>
-  <br />
-  <%= submit_tag("Let's get fresh air") %>
-<% end %>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-3">
+      <h1>FreshAir</h1>
+      <h2>Cheapest trip for next week-end</h2>
+    </div>
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+      <div class="trips-card">
+      <%= form_tag('trips', method: 'get') do %>
+        <div class="form-group">
+          <%= label_tag(:iata_code, "From") %>
+          <%= select_tag(:iata_code, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }), class: 'form-control' ) %>
+        </div>
+        <div class="form-group">
+          <%= label_tag(:departure_date, "Depart") %>
+          <%= select_tag(:departure_date, options_for_select(@dates.map { |date| ['next ' + date.strftime('%A'), date] }), class: 'form-control', style: 'text-transform: lowercase' ) %>
+
+        </div>
+        <div class="form-group">
+          <%= label_tag(:duration, "How many days") %>
+          <%= select_tag(:duration, options_for_select(Scraper::DURATIONS.map { |d| [d.to_s + ' days', d] }), class: 'form-control') %>
+        </div>
+        <%= submit_tag("Let's get some Freshaair", class: 'btn btn-success btn-block') %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</div>
