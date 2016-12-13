@@ -42,7 +42,7 @@
     flex-direction: row;
     justify-content: space-between;
     padding: 15px 30px;
-    border-top: 1px solid #f1f1f1;
+    border-top: 1px solid #ededed;
   }
   .flight-details, .housing-details {
     display: flex;
@@ -59,6 +59,11 @@
     margin: 0 0 0 6%;
     color: #aaa;
   }
+  .housing-section {
+    .logo {
+      margin: 0 40px;
+    }
+  }
   .total-section {
     align-items: center;
     padding-bottom: 30px;
@@ -68,7 +73,6 @@
     line-height: 38px;
   }
   .logo {
-    margin: 0 40px;
     width: 50px;
     height: 50px;
     background-size: cover;

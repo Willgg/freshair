@@ -1,4 +1,5 @@
 namespace :amadeus do
+  extend Scraper
   desc "Todo"
   task cache_all: :environment do
     departure_dates = [Scraper::date_of_next('Friday').to_s, Scraper::date_of_next('Saturday').to_s]
@@ -22,7 +23,13 @@ namespace :amadeus do
             flights['results'].each do |flight|
               destination = flight['destination']
               if airbnb[destination]
-                flight['airbnb'] = airbnb[destination][flight['departure_date']][duration.to_s]
+                airbnb_prices = airbnb[destination][flight['departure_date']][duration.to_s]
+                # Convert Airbnb prices to flights currency
+                airbnb_prices.each do |people, price|
+                  airbnb_prices[people] = Currency.new('EUR', flights['currency'], price).convert if flights['currency'] != 'EUR'
+                  puts price.to_s + '  ' + airbnb_prices[people].to_s
+                end
+                flight['airbnb'] = airbnb_prices
               end
             end
 
