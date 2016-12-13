@@ -1,5 +1,5 @@
 namespace :airbnb do
-  desc "Scrap Airbnb for all destinations supported by Amadeus and store it in redis cache"
+  desc "Scrap Airbnb for all destinations supported by Amadeus"
   task cache_all: :environment do
     destinations = Scraper::european_airports
     dates = [Scraper::date_of_next('Friday').to_s, Scraper::date_of_next('Saturday').to_s]

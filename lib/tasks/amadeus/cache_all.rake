@@ -1,5 +1,4 @@
 namespace :amadeus do
-  extend Scraper
   desc "Todo"
   task cache_all: :environment do
     departure_dates = [Scraper::date_of_next('Friday').to_s, Scraper::date_of_next('Saturday').to_s]
