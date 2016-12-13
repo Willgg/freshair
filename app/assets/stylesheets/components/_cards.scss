@@ -1,19 +1,9 @@
 .trips-card{
   background: #FFF;
   border-radius: 8px;
+  margin-bottom: 20px;
   form {
     padding: 30px;
-  }
-  .btn-success, .btn-success:focus, .btn-success:active {
-    background-color: #904e95;
-    color: #fff;
-    border: none;
-    text-transform: uppercase;
-    line-height: 30px;
-    font-size: 11px;
-    &:hover {
-      background-color: darken($brand-secondary, 10%);
-    }
   }
   .trips-card-head {
     border-radius: 8px 8px 0 0;
@@ -24,7 +14,6 @@
     }
   }
   .trips-card-content {
-    border-radius: 0 0 8px 8px;
     padding: 0;
     h4 {
       font-size: 60px;
@@ -36,6 +25,9 @@
       font-size: 12px;
       color: #aaa;
     }
+  }
+  .trips-card-footer {
+    border-radius: 0 0 8px 8px;
   }
   .flight-section, .housing-section, .total-section {
     display: flex;
@@ -49,28 +41,37 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    p {
+      margin: 0;
+    }
   }
   .flight-price, .housing-price {
-    font-size: 40px;
+    font-size: 30px;
     line-height: 45px;
     width: 27%;
     margin: 0 0 0 8%;
     text-align: center;
     margin: 0 0 0 6%;
     color: #aaa;
+    .btn-success {
+      text-transform: uppercase;
+      line-height: 30px;
+      font-size: 11px;
+    }
   }
   .housing-section {
     .logo {
-      margin: 0 40px;
+      margin: 0 32px;
     }
   }
   .total-section {
-    align-items: center;
+    align-items: flex-end;
+    padding-top: 30px;
     padding-bottom: 30px;
   }
   .total-price {
-    font-size: 50px;
-    line-height: 38px;
+    font-size: 40px;
+    line-height: 30px;
   }
   .logo {
     width: 50px;
@@ -78,9 +79,12 @@
     background-size: cover;
   }
   .fa {
-    color: $brand-primary;
+    // color: $brand-primary;
     cursor: pointer;
     font-size: 26px;
+  }
+  .fa.active {
+    color: $brand-primary;
   }
   .inactive {
     display: none;

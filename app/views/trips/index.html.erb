@@ -5,9 +5,12 @@
       <h2>Cheapest trip for next week-end</h2>
     </div>
     <div class="col-xs-12 col-sm-6 col-sm-offset-3">
-      <div class="trips-card">
+      <% count = 0 %>
+      <% @flights.each do |flight| %>
+      <% count += 1 %>
+      <div class="trips-card inactive" id="flight-<%= count %>" %>
         <div class="trips-card-head">
-          <h3><%= Airport.find_by(iata: @flight['destination']).city.name %></h3>
+          <h3><%= Airport.find_by(iata: flight['destination']).city.name %></h3>
         </div>
         <div class="trips-card-content">
           <div class="flight-section">
@@ -15,49 +18,85 @@
               <div>
                 <h4><%= params[:iata_code] %></h4>
                 <p><small>Current&nbsp;location</small></p>
-                <%= @flight['departure_date'].to_date.strftime('%a %d %b') %>
+                <p><%= flight['departure_date'].to_date.strftime('%a %d %b') %></p>
               </div>
               <div class="logo" style='background-image: url(<%= image_url 'freshair_icon' %>)'>
               </div>
               <div>
-                <h4><%= @flight['destination'] %></h4>
+                <h4><%= flight['destination'] %></h4>
                 <p><small>weekend location</small></p>
-                <%= @flight['return_date'].to_date.strftime('%a %d %b') %>
+                <p><%= flight['return_date'].to_date.strftime('%a %d %b') %></p>
               </div>
             </div>
             <div class="flight-price">
-              <span><%= @flight['price'].to_i %>&euro;</span>
+              <span><%= flight['price'].to_i %>&euro;</span>
               <div class="btn btn-success">Book now</div>
             </div>
           </div>
           <div class="housing-section">
-              <div class="housing-details">
-                <div style="flex: 1">
-                  <small>Guests</small><br />
-                  <%= (params[:people]) %><%= '1 people' if params[:people].nil? %>
-                </div>
-                <div class="logo" style='background-image: url(<%= image_url 'airbnb' %>)'></div>
-                <div style="flex: 1">
-                  <small>Rental type</small><br />
-                  Entire Home
-                </div>
+            <div class="housing-details">
+              <div style="flex: 1">
+                <small>Guests</small><br />
+                <%= (params[:people]) %><%= '1 people' if params[:people].nil? %>
               </div>
-              <div class="housing-price">
-                <span><%= @flight['airbnb']['1'].to_i %>&euro;</span>
-                <a class="btn btn-success"
-                   href="https://www.airbnb.fr/s/<%= "#{@airport.city.clean_to_str}" %>?checkin=<%= @flight["departure_date"].to_date.strftime('%d/%m/%Y') %>&checkout=<%= @flight["return_date"].to_date.strftime('%d/%m/%Y') %>&room_types%5B%5D=Entire%20home%2Fapt">Book now</a>
+              <div class="logo" style='background-image: url(<%= image_url 'airbnb' %>)'></div>
+              <div style="flex: 1">
+                <small>Rental type</small><br />
+                Entire Home
               </div>
+            </div>
+            <div class="housing-price">
+              <span><%= flight['airbnb']['1'].to_i %>&euro;</span>
+              <a class="btn btn-success"
+                 href="https://www.airbnb.fr/s/<%= "#{Airport.find_by(iata: flight['destination']).city.clean_to_str}" %>?checkin=<%= flight["departure_date"].to_date.strftime('%d/%m/%Y') %>&checkout=<%= flight["return_date"].to_date.strftime('%d/%m/%Y') %>&room_types%5B%5D=Entire%20home%2Fapt">Book now</a>
+            </div>
           </div>
+        </div>
+        <div class="trips-card-footer">
           <div class="total-section">
-            <div class="">
+            <div class="save-trip">
               <i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart inactive" aria-hidden="true"></i>
             </div>
             <div class="total-price">
-              <%= @flight['airbnb']['1'].to_i + @flight['price'].to_i %>&euro;
+              <%= flight['airbnb']['1'].to_i + flight['price'].to_i %>&euro;
             </div>
           </div>
         </div>
       </div>
+      <% end %>
+      <p class="more-result">
+        <%= link_to '#flight-2', id: 'more-flights' do %>
+           <i class="fa fa-angle-down" aria-hidden="true"></i>&nbsp;
+           Get more results&nbsp;
+           <i class="fa fa-angle-down" aria-hidden="true"></i>
+        <% end %>
+      </p>
     </div>
   </div>
 </div>
+
+<% content_for(:after_js) do %>
+  <script>
+    $('.trips-card.inactive:first-child').removeClass('inactive');
+
+    $('#more-flights').on( "click", function() {
+      $('.trips-card.inactive').first().removeClass('inactive');
+      $('html, body').animate({
+        scrollTop: $(  $(this).attr('href') ).offset().top
+      }, 500);
+      $('#more-flights').attr( 'href', '#' + $('.trips-card.inactive').first().attr('id'));
+    });
+
+    $(".save-trip").hover(function(){
+      $(".fa-heart-o").addClass("active");
+      }, function(){
+      $(".fa-heart-o").removeClass("active");
+    });
+
+    $('.save-trip').on( "click", function() {
+      $(".fa-heart-o").toggleClass("inactive");
+      $(".fa-heart").toggleClass("active");
+      $(".fa-heart").toggleClass("inactive");
+    });
+  </script>
+<% end %>

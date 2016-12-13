@@ -1,6 +1,6 @@
 module Scraper
   PEOPLE = [1]
-  DURATIONS = [2]
+  DURATIONS = [2, 3]
   CURRENCIES = ['EUR', 'GBP', 'CSK']
   AIRPORTS = { 'AL' => ['TIA'],
       'DE' => ['TXL', 'DRS', 'FRA', 'HAM', 'MUC', 'STR', 'DUS', 'CGN'],

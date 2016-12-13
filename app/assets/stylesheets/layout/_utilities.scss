@@ -23,7 +23,31 @@
 .bg-dark-blue {
   background: #3b5998;
 }
+.inactive {
+  display: none;
+}
 
+// Links
+.more-result {
+  color: #fff;
+  opacity: 0.7;
+  text-align: center;
+  margin: 0 0 30px 0;
+  #more-flights {
+    color: #fff;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    opacity: 1;
+  }
+}
+a:hover, a:focus, a:active {
+  text-decoration: none;
+}
+// Headers
 h1 {
   font-size: 100px;
   line-height: 80px;

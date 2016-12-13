@@ -14,7 +14,8 @@
   <body class='<%= "#{params[:controller]}-#{params[:action]}".gsub('/', '-') %>'>
     <%= render 'shared/navbar' %>
     <%= yield %>
-    <%= render 'shared/footer' %>
     <%= javascript_include_tag 'application' %>
+    <%= render 'shared/footer' %>
+    <%= yield(:after_js) %>
   </body>
 </html>

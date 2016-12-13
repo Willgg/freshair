@@ -6,8 +6,8 @@ class TripsController < ApplicationController
     options[:duration] = params[:duration] if params[:duration]
     options[:people] = params[:people] if params[:people]
     @flights = Trip.find_cheapest(options)
-    @flight  = @flights.first
-    @airport = Airport.find_by(iata: @flight['destination'])
+    # @flight  = @flights.first
+    # @airport = Airport.find_by(iata: @flight['destination'])
     # service = AmadeusService.new(params[:iata_code],options)
     # @result  = service.get_inspiration
   end

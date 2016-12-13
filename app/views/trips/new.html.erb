@@ -14,7 +14,6 @@
         <div class="form-group">
           <%= label_tag(:departure_date, "Depart") %>
           <%= select_tag(:departure_date, options_for_select(@dates.map { |date| ['next ' + date.strftime('%A'), date] }), class: 'form-control', style: 'text-transform: lowercase' ) %>
-
         </div>
         <div class="form-group">
           <%= label_tag(:duration, "How many days") %>
