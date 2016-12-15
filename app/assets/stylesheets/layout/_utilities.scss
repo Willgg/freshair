@@ -49,6 +49,7 @@ a:hover, a:focus, a:active {
 }
 // Headers
 h1 {
+  font-family: $logo-font;
   font-size: 100px;
   line-height: 80px;
   font-weight: 700;
@@ -59,8 +60,9 @@ h1 {
 }
 h2 {
   opacity: 0.7;
-  font-size: 30px;
+  font-size: 32px;
+  font-weight: 300;
   text-align: center;
   color: #fff;
-  margin: 0 0 40px 0;
+  margin: 0 0 35px 0;
 }

@@ -31,7 +31,16 @@ class AirbnbScrapping
     html_doc.search('.avg-price .price').each do |element|
       prices << element.text.scan(/[0-9]+/).join.to_f.round(2)
     end
-    return Currency.new('USD', 'EUR', prices.first).convert
+
+    puts 'Price to convert =>' + prices.first.to_s + ' USD'
+    count = 0
+    begin
+      converted_price = Currency::Fixer.new('USD', 'EUR', prices.first).convert_from_cache
+    rescue
+      retry if count <= 5
+    end
+    puts 'Price converted =>' + converted_price.round(4).to_s + ' EUR'
+    return converted_price.round(4)
   end
 
   private

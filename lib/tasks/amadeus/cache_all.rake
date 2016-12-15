@@ -26,7 +26,8 @@ namespace :amadeus do
 
                 # Convert Airbnb prices to flights currency
                 airbnb_prices.each do |people, price|
-                  airbnb_prices[people] = Currency.new('EUR', flights['currency'], price).convert if flights['currency'] != 'EUR'
+                  airbnb_prices[people] =
+                    Currency::Fixer.new('EUR', flights['currency'], price).convert_from_cache if flights['currency'] != 'EUR'
                 end
                 flight['airbnb'] = airbnb_prices
               end

@@ -9,6 +9,8 @@ namespace :airbnb do
     puts "START AIRBNB SCRAPING ..."
     puts "DESTINATIONS: #{destinations.inspect}"
     puts "DATES: #{dates.inspect}"
+    puts "DURATIONS: #{durations.inspect}"
+    puts "PEOPLE: #{adults_range.inspect}"
     puts "#####################################"
 
     dates = dates.map { |date| date.to_date }
@@ -26,18 +28,18 @@ namespace :airbnb do
             checkin  = date
             checkout = checkin + duration.days
             request = AirbnbScrapping.new(destination, checkin, checkout , adults)
-            puts '*** Request for ' + destination.to_s + ', chekin: ' + checkin.to_s + ', checkout:' + checkout.to_s + ', ' + adults.to_s + ' adults people ***'
+            puts ''
+            puts '*** Request for ' + destination.to_s + ', checkin: ' + checkin.to_s + ', checkout:' + checkout.to_s + ', ' + adults.to_s + ' adults people ***'
             price   = request.scrap_price
             price_person = (price / adults).round(2)
             results[destination][date][duration][adults] = price_person
-            puts price_person
-            puts ''
-            sleep [5, 6, 7, 8, 9, 10].sample
+            sleep [4, 6, 7, 8].sample
           end
         end
       end
       count += 1
       puts (destinations.count - count).to_s + ' remaining destinations'
+      puts ''
     end
     results = results.to_json
     $redis.set('airbnb', results)
