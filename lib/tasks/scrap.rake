@@ -3,7 +3,7 @@ namespace :cache do
   task reset: :environment do
     Rake::Task["currency:fixer:clear"].invoke
     Rake::Task["currency:fixer:cache"].invoke
-    Rake::Task["currency:fixer:clear"].invoke
+    Rake::Task["currency:layer:clear"].invoke
     Rake::Task["currency:layer:cache"].invoke
     Rake::Task["airbnb:clear_all"].invoke
     Rake::Task['airbnb:cache_all'].invoke
