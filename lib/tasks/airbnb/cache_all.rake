@@ -33,15 +33,14 @@ namespace :airbnb do
             price   = request.scrap_price
             price_person = (price / adults).round(2)
             results[destination][date][duration][adults] = price_person
-            sleep [4, 6, 7, 8].sample
+            sleep [5, 4, 6, 7, 8, 9].sample
           end
         end
       end
       count += 1
       puts (destinations.count - count).to_s + ' remaining destinations'
       puts ''
+      $redis.set('airbnb', results.to_json)
     end
-    results = results.to_json
-    $redis.set('airbnb', results)
   end
 end

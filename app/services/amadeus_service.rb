@@ -26,6 +26,8 @@ class AmadeusService
     uri = uri + '&' + 'direct=' + @direct.to_s unless @direct.blank?
     uri = uri + '&' + 'destination=' + @destination unless @destination.blank?
     uri = uri + '&' + 'duration=' + @duration.to_s unless @duration.blank?
+
+    puts uri
     result = open(uri).read
     result_json = JSON.parse(result)
     return result_json

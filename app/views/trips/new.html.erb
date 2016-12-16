@@ -8,16 +8,16 @@
       <div class="trips-card">
       <%= form_tag('trips', method: 'get') do %>
         <div class="form-group">
-          <%= label_tag(:iata_code, "From") %>
-          <%= select_tag(:iata_code, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }), class: 'form-control' ) %>
+          <%= label_tag(:iata_code, "Leaving from", style: 'display: none;') %>
+          <%= select_tag(:iata_code, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }), prompt: 'Where are you living ?', class: 'form-control' ) %>
         </div>
         <div class="form-group">
-          <%= label_tag(:departure_date, "Depart") %>
-          <%= select_tag(:departure_date, options_for_select(@dates.map { |date| ['next ' + date.strftime('%A'), date] }), class: 'form-control', style: 'text-transform: lowercase' ) %>
+          <%= label_tag(:departure_date, "Leaving on") %>
+          <%= select_tag(:departure_date, options_for_select(@dates.map { |date| ['next ' + date.strftime('%A'), date] }), class: 'form-control', prompt: 'When do you leave ?' ) %>
         </div>
         <div class="form-group">
-          <%= label_tag(:duration, "How many days") %>
-          <%= select_tag(:duration, options_for_select(Scraper::DURATIONS.map { |d| [d.to_s + ' days', d] }), class: 'form-control') %>
+          <%= label_tag(:duration, "Days") %>
+          <%= select_tag(:duration, options_for_select(Scraper::DURATIONS.map { |d| [d.to_s + ' days', d] }), class: 'form-control', prompt: 'How many days ?') %>
         </div>
         <%= submit_tag("Let's get some Freshair", class: 'btn btn-success btn-block') %>
       <% end %>
