@@ -5,22 +5,39 @@
       <h2>Cheapest trip for next week-end</h2>
     </div>
     <div class="col-xs-12 col-sm-4 col-sm-offset-4">
-      <div class="trips-card">
-      <%= form_tag('trips', method: 'get') do %>
-        <div class="form-group">
-          <%= label_tag(:iata_code, "Leaving from", style: 'display: none;') %>
-          <%= select_tag(:iata_code, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }), prompt: 'Where are you living ?', class: 'form-control' ) %>
+        <div class="trips-card">
+        <%= form_tag('trips', method: 'get') do %>
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <%= label_tag(:iata_code, "Leaving from", style: 'display: none;') %>
+                <%= select_tag(:iata_code, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }), prompt: 'Leaving from', class: 'form-control' ) %>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <div class="form-group">
+                <%= label_tag(:departure_date, "Leaving on") %>
+                <%= select_tag(:departure_date, options_for_select(@dates.map { |date| [date.strftime('%A %d %B'), date] }), class: 'form-control', prompt: 'Departure day' ) %>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <%= label_tag(:duration, "Days") %>
+                <%= select_tag(:duration, options_for_select(Scraper::DURATIONS.map { |d| [d.to_s + ' days', d] }), class: 'form-control', prompt: 'Days') %>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+              <div class="form-group">
+                <%= label_tag(:people, "People") %>
+                <%= select_tag(:people, options_for_select(Scraper::PEOPLE.map { |d| [d.to_s + ' people', d] }), class: 'form-control', prompt: 'People') %>
+              </div>
+            </div>
+            <div class="col-xs-12">
+              <%= submit_tag("Let's get some Freshair", class: 'btn btn-success btn-block') %>
+            </div>
+          </div>
+        <% end %>
         </div>
-        <div class="form-group">
-          <%= label_tag(:departure_date, "Leaving on") %>
-          <%= select_tag(:departure_date, options_for_select(@dates.map { |date| ['next ' + date.strftime('%A'), date] }), class: 'form-control', prompt: 'When do you leave ?' ) %>
-        </div>
-        <div class="form-group">
-          <%= label_tag(:duration, "Days") %>
-          <%= select_tag(:duration, options_for_select(Scraper::DURATIONS.map { |d| [d.to_s + ' days', d] }), class: 'form-control', prompt: 'How many days ?') %>
-        </div>
-        <%= submit_tag("Let's get some Freshair", class: 'btn btn-success btn-block') %>
-      <% end %>
       </div>
     </div>
   </div>

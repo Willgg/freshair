@@ -1,5 +1,6 @@
 module Scraper
   PEOPLE = [1, 2]
+  DAYS = ['Friday', 'Saturday']
   DURATIONS = [2, 3]
   CURRENCIES = ['EUR', 'GBP']
   AIRPORTS = { 'AL' => ['TIA'],
@@ -40,10 +41,13 @@ module Scraper
       'UA' => ['IEV', 'KBP']
     }
 
-  def self.date_of_next(day)
-    date  = Date.parse(day)
-    delta = date > Date.current ? 0 : 7
-    date + delta
+  def self.dates
+    DAYS.map do |day|
+      date  = Date.parse(day)
+      delta = date > Date.current ? 0 : 7
+      date += delta
+      day = [(date)]
+    end.flatten.sort
   end
 
   def self.user_agents

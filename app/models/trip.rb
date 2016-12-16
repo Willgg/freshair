@@ -12,6 +12,6 @@ class Trip < ActiveRecord::Base
 
     results  = JSON.parse($redis.get(origin))
     results  = results[date][duration]['results']
-    results  = results.sort {|a, b| a["price"].to_i + a["airbnb"]["1"].to_i <=> b["price"].to_i + b["airbnb"]["1"].to_i}
+    results  = results.sort {|a, b| a["price"].to_i + a["airbnb"][people].to_i <=> b["price"].to_i + b["airbnb"][people].to_i}
   end
 end

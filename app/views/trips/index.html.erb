@@ -24,7 +24,7 @@
               </div>
               <div>
                 <h4><%= flight['destination'] %></h4>
-                <p><small>weekend location</small></p>
+                <p><small>trip destination</small></p>
                 <p><%= flight['return_date'].to_date.strftime('%a %d %b') %></p>
               </div>
             </div>
@@ -37,7 +37,7 @@
             <div class="housing-details">
               <div style="flex: 1">
                 <small>Guests</small><br />
-                <%= (params[:people]) %><%= '1 people' if params[:people].nil? %>
+                <%= params[:people].to_s + ' people' %>
               </div>
               <div class="logo" style='background-image: url(<%= image_url 'airbnb' %>)'></div>
               <div style="flex: 1">
@@ -46,7 +46,7 @@
               </div>
             </div>
             <div class="housing-price">
-              <span><%= flight['airbnb']['1'].to_i %>&euro;</span>
+              <span><%= flight['airbnb'][params[:people]].to_i %>&euro;</span>
               <a class="btn btn-success"
                  href="https://www.airbnb.fr/s/<%= "#{Airport.find_by(iata: flight['destination']).city.clean_to_str}" %>?checkin=<%= flight["departure_date"].to_date.strftime('%d/%m/%Y') %>&checkout=<%= flight["return_date"].to_date.strftime('%d/%m/%Y') %>&room_types%5B%5D=Entire%20home%2Fapt">Book now</a>
             </div>
@@ -58,7 +58,7 @@
               <i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart inactive" aria-hidden="true"></i>
             </div>
             <div class="total-price">
-              <%= flight['airbnb']['1'].to_i + flight['price'].to_i %>&euro;
+              <%= flight['airbnb'][params[:people]].to_i + flight['price'].to_i %>&euro;
             </div>
           </div>
         </div>

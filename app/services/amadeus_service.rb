@@ -104,7 +104,7 @@ class AmadeusService
 
   # TODO: move this method into job and add airbnb scrapping result to
   def build_trips(*currencies)
-    departure_dates = [Scraper::date_of_next('Friday').to_s, Scraper::date_of_next('Saturday').to_s]
+    departure_dates = Scraper::dates
     duration = Scraper::DURATIONS
     airbnb   = JSON.parse($redis.get('airbnb'))
 

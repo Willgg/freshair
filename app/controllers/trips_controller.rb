@@ -10,6 +10,6 @@ class TripsController < ApplicationController
 
   def new
     @trip = Trip.new
-    @dates = [Scraper::date_of_next('Friday'), Scraper::date_of_next('Saturday')]
+    @dates = Scraper::dates
   end
 end

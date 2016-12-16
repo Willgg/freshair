@@ -1,7 +1,7 @@
 namespace :amadeus do
   desc "Todo"
   task cache_all: :environment do
-    departure_dates = [Scraper::date_of_next('Friday').to_s, Scraper::date_of_next('Saturday').to_s]
+    departure_dates = Scraper::date
     duration = Scraper::DURATIONS
     currencies = Scraper::CURRENCIES
     airbnb   = JSON.parse($redis.get('airbnb'))
