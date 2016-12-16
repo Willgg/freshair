@@ -2,7 +2,7 @@ namespace :airbnb do
   desc "Scrap Airbnb for all destinations supported by Amadeus"
   task cache_all: :environment do
     destinations = Scraper::european_airports
-    dates = Scraper::date
+    dates = Scraper::dates
     durations = Scraper::DURATIONS
     adults_range = Scraper::PEOPLE
     puts "#####################################"
