@@ -49,7 +49,7 @@
                 </div>
               </div>
               <div class="housing-price">
-                <span><%= flight['airbnb'][params[:people]].to_i * params[:duration].to_i %>&euro;</span>
+                <span><%= flight['airbnb'][params[:people]].to_i %>&euro;</span>
                 <a class="btn btn-success"
                    href="https://www.airbnb.fr/s/<%= "#{Airport.find_by(iata: flight['destination']).city.clean_to_str}" %>?checkin=<%= flight["departure_date"].to_date.strftime('%d/%m/%Y') %>&checkout=<%= flight["return_date"].to_date.strftime('%d/%m/%Y') %>&room_types%5B%5D=Entire%20home%2Fapt">Book now</a>
               </div>
@@ -58,10 +58,16 @@
           <div class="trips-card-footer">
             <div class="total-section">
               <div class="save-trip">
-                <i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart inactive" aria-hidden="true"></i>
+                <%= simple_form_for @trip, html: {id: "new-trip-#{count}"} do |f| %>
+                  <%= f.hidden_field :airport, value: params[:iata_code] %>
+                  <%= f.hidden_field :departure_date, value: params[:departure_date] %>
+                  <%= f.hidden_field :duration, value: params[:duration]  %>
+                  <%= f.hidden_field :people, value: params[:people] %>
+                  <i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart inactive" aria-hidden="true"></i>
+                <% end %>
               </div>
               <div class="total-price">
-                <%= (flight['airbnb'][params[:people]].to_i * params[:duration].to_i) + flight['price'].to_i %>&euro;
+                <%= (flight['airbnb'][params[:people]].to_i) + flight['price'].to_i %>&euro;
               </div>
             </div>
           </div>
@@ -100,9 +106,7 @@
     });
 
     $('.save-trip').on( "click", function() {
-      $(".fa-heart-o").toggleClass("inactive");
-      $(".fa-heart").toggleClass("active");
-      $(".fa-heart").toggleClass("inactive");
+      $(this).find("form").submit();
     });
   </script>
 <% end %>

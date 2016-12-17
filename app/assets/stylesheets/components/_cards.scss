@@ -69,8 +69,13 @@
   }
   .total-section {
     align-items: flex-end;
-    padding-top: 30px;
+    padding-top: 15px;
     padding-bottom: 30px;
+    .save-trip {
+      form {
+        padding: 0;
+      }
+    }
   }
   .total-price {
     font-size: 40px;
