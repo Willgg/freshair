@@ -23,7 +23,7 @@
                   <p><small><%= t('.iata_from') %></small></p>
                   <p><%= flight['departure_date'].to_date.strftime('%a %d %b') %></p>
                 </div>
-                <div class="logo" style='background-image: url(<%= image_url 'freshair_icon' %>)'>
+                <div class="logo" style='background-image: url(<%= asset_path 'freshair_icon' %>)'>
                 </div>
                 <div>
                   <h4><%= flight['destination'] %></h4>
@@ -42,7 +42,7 @@
                   <small>Guests</small><br />
                   <%= params[:people].to_s + ' people' %>
                 </div>
-                <div class="logo" style='background-image: url(<%= image_url 'airbnb' %>)'></div>
+                <div class="logo" style='background-image: url(<%= asset_path 'airbnb' %>)'></div>
                 <div style="flex: 1">
                   <small>Rental type</small><br />
                   Entire Home
