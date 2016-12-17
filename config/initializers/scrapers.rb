@@ -1,5 +1,5 @@
 module Scraper
-  PEOPLE = [1, 2]
+  PEOPLE = [2, 3]
   DAYS = ['Friday', 'Saturday']
   DURATIONS = [1, 2]
   CURRENCIES = ['EUR', 'GBP']
@@ -46,7 +46,7 @@ module Scraper
       date  = Date.parse(day)
       delta = date > Date.current ? 0 : 7
       date += delta
-      day = [(date)]
+      day = [date, date + 7.days]
     end.flatten.sort
   end
 
