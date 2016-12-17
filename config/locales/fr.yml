@@ -1,0 +1,4 @@
+fr:
+  hello: "Hello world"
+  iata_from: "Origine"
+  iata_to: "Destination"

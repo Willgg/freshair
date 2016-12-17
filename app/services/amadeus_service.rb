@@ -22,7 +22,7 @@ class AmadeusService
   def get_inspiration(*options)
     url = 'https://api.sandbox.amadeus.com/v1.2/flights/inspiration-search'
     uri = url + '?' + 'apikey=' + @apikey + '&' + 'origin=' + @origin
-    uri = uri + '&' + 'departure_date=' + @departure_date unless @departure_date.blank?
+    uri = uri + '&' + 'departure_date=' + @departure_date.to_s unless @departure_date.blank?
     uri = uri + '&' + 'direct=' + @direct.to_s unless @direct.blank?
     uri = uri + '&' + 'destination=' + @destination unless @destination.blank?
     uri = uri + '&' + 'duration=' + @duration.to_s unless @duration.blank?

@@ -21,3 +21,5 @@
 
 en:
   hello: "Hello world"
+  iata_from: "Current location"
+  iata_to: "trip destination"

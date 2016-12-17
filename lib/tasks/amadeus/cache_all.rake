@@ -1,19 +1,19 @@
 namespace :amadeus do
-  desc "Todo"
+  desc "Store data in cache from Amadeus API's inspiration endpoint"
   task cache_all: :environment do
-    departure_dates = Scraper::dates
-    duration = Scraper::DURATIONS
+    dates      = Scraper::dates
+    duration   = Scraper::DURATIONS
     currencies = Scraper::CURRENCIES
-    airbnb   = JSON.parse($redis.get('airbnb'))
+    airbnb     = JSON.parse($redis.get('airbnb'))
 
     AmadeusService.list_origins(currencies).values.flatten.each do |origin|
       trips = {}
-      departure_dates.each do |date|
+      dates.each do |date|
         trips[date] = {}
 
         duration.each do |duration|
-          flights = AmadeusService.new(origin, departure_date: date, duration: duration, direct: true).get_inspiration
-          unless !flights['status'].nil? && flights['status'] == '400'
+          begin
+            flights = AmadeusService.new(origin, departure_date: date, duration: duration, direct: true).get_inspiration
 
             # Keep only destinations included in Airbnb Scraping
             flights['results'].reject! { |flight| airbnb[flight['destination']].nil? }
@@ -34,6 +34,7 @@ namespace :amadeus do
             end
 
             trips[date][duration] = flights
+          rescue
           end
         end
       end

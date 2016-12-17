@@ -1,7 +1,7 @@
 module Scraper
   PEOPLE = [1, 2]
   DAYS = ['Friday', 'Saturday']
-  DURATIONS = [2, 3]
+  DURATIONS = [1, 2]
   CURRENCIES = ['EUR', 'GBP']
   AIRPORTS = { 'AL' => ['TIA'],
       'DE' => ['TXL', 'DRS', 'FRA', 'HAM', 'MUC', 'STR', 'DUS', 'CGN'],

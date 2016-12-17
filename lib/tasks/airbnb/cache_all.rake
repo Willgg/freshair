@@ -31,8 +31,9 @@ namespace :airbnb do
             puts ''
             puts '*** Request for ' + destination.to_s + ', checkin: ' + checkin.to_s + ', checkout:' + checkout.to_s + ', ' + adults.to_s + ' adults people ***'
             price   = request.scrap_price
-            price_person = (price / adults).round(2)
+            price_person = ((price / adults) * duration).round(2)
             results[destination][date][duration][adults] = price_person
+            puts '* ' + price_person.to_s + ' for ' + adults.to_s + ' adults for ' + duration.to_s + ' nights'
             sleep [5, 4, 6, 7, 8, 9].sample
           end
         end
@@ -42,5 +43,8 @@ namespace :airbnb do
       puts ''
       $redis.set('airbnb', results.to_json)
     end
+    puts "#####################################"
+    puts "AIRBNB SCRAPING DONE !"
+    puts "#####################################"
   end
 end

@@ -22,7 +22,7 @@ class AirbnbScrapping
     uri = uri + '&' + 'checkin=' + CGI.escape(@checkin_date.strftime('%d/%m/%Y'))
     uri = uri + '&' + 'checkout=' + CGI.escape(@checkout_date.strftime('%d/%m/%Y'))
     uri = uri + '&room_types%5B%5D=Entire%20home%2Fapt' if @entire_home
-    puts uri
+    puts 'URL: ' + uri
 
     prices = []
     while prices.blank?
@@ -30,14 +30,13 @@ class AirbnbScrapping
       html_doc = Nokogiri::HTML(html_file)
 
       html_doc.search('.avg-price .price').each do |element|
-        puts 'Scrapping result : ' + element.inspect
         prices << element.text.scan(/[0-9]+/).join.to_f.round(2)
-        puts 'prices: ' + prices.inspect
+        puts '* Prices scraped: ' + prices.inspect
       end
     end
-    puts 'Price to convert =>' + prices.first.to_s + ' USD'
+    puts '* Price to convert =>' + prices.first.to_s + ' USD'
     converted_price = Currency::Fixer.new('USD', 'EUR', prices.first).convert_from_cache
-    puts 'Price converted =>' + converted_price.round(4).to_s + ' EUR'
+    puts '* Price converted =>' + converted_price.round(4).to_s + ' EUR'
     return converted_price.round(4)
   end
 

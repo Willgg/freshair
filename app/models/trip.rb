@@ -9,9 +9,13 @@ class Trip < ActiveRecord::Base
     origin   = options[:origin]
     duration = options[:duration]
     people   = options[:people]
-
     results  = JSON.parse($redis.get(origin))
-    results  = results[date][duration]['results']
-    results  = results.sort {|a, b| a["price"].to_i + a["airbnb"][people].to_i <=> b["price"].to_i + b["airbnb"][people].to_i}
+
+    if results[date] && results[date][duration] && results[date][duration]['results']
+      results  = results[date][duration]['results']
+      results.sort {|a, b| a["price"].to_i + a["airbnb"][people].to_i <=> b["price"].to_i + b["airbnb"][people].to_i}
+    else
+      false
+    end
   end
 end
