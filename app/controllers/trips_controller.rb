@@ -14,13 +14,6 @@ class TripsController < ApplicationController
     @dates = Scraper::dates
   end
 
-  def create
-    airport = Airport.find_by(iata: params['trip']['airport'])
-    @trip = Trip.new(trip_params)
-    @trip.airport = airport
-    @trip.save
-  end
-
   private
 
   def trip_params

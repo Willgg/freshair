@@ -13,8 +13,7 @@ class Trip < ActiveRecord::Base
 
     if results[date] && results[date][duration] && results[date][duration]['results']
       results  = results[date][duration]['results']
-      results  =
-        results.sort {|a, b| a["price"].to_i + a["airbnb"][people].to_i <=> b["price"].to_i + b["airbnb"][people].to_i}
+      results.sort {|a, b| a["price"].to_i + (a["airbnb"][people].to_i * duration.to_i) <=> b["price"].to_i + (b["airbnb"][people].to_i * duration.to_i) }
     else
       false
     end

@@ -89,12 +89,9 @@
   .fa {
     // color: $brand-primary;
     cursor: pointer;
-    font-size: 26px;
-  }
-  .fa.active {
-    color: $brand-primary;
-  }
-  .inactive {
-    display: none;
+    font-size: 20px;
+    &:hover {
+      color: #555;
+    }
   }
 }
