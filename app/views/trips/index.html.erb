@@ -57,8 +57,8 @@
           </div>
           <div class="trips-card-footer">
             <div class="total-section">
-              <div class="save-trip">
-                <i class="fa fa-heart-o" aria-hidden="true"></i><i class="fa fa-heart inactive" aria-hidden="true"></i>
+              <div class="share-trip">
+                <i class="fa fa-share" aria-hidden="true"></i>
               </div>
               <div class="total-price">
                 <%= (flight['airbnb'][params[:people]].to_i * params[:duration].to_i) + flight['price'].to_i %>&euro;
@@ -91,18 +91,6 @@
         scrollTop: $(  $(this).attr('href') ).offset().top
       }, 500);
       $('#more-flights').attr( 'href', '#' + $('.trips-card.inactive').first().attr('id'));
-    });
-
-    $(".save-trip").hover(function(){
-      $(".fa-heart-o").addClass("active");
-      }, function(){
-      $(".fa-heart-o").removeClass("active");
-    });
-
-    $('.save-trip').on( "click", function() {
-      $(".fa-heart-o").toggleClass("inactive");
-      $(".fa-heart").toggleClass("active");
-      $(".fa-heart").toggleClass("inactive");
     });
   </script>
 <% end %>
