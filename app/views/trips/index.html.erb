@@ -38,15 +38,15 @@
             </div>
             <div class="housing-section">
               <div class="housing-details">
-                <div style="flex: 1">
+                <p>
                   <small>Guests</small><br />
                   <%= params[:people].to_s + ' people' %>
-                </div>
+                </p>
                 <div class="logo" style='background-image: url(<%= asset_path 'airbnb' %>)'></div>
-                <div style="flex: 1">
+                <p>
                   <small>Rental type</small><br />
                   Entire Home
-                </div>
+                </p>
               </div>
               <div class="housing-price">
                 <span><%= flight['airbnb'][params[:people]].to_i * params[:duration].to_i %>&euro;</span>
