@@ -11,10 +11,16 @@
       display: none;
     }
   }
+  p {
+    margin: 0;
+  }
   .trips-card-head {
     border-radius: 8px 8px 0 0;
     padding: 15px;
     h3 {
+      font-size: 22px;
+      line-height: 17px;
+      font-weight: normal;
       text-align: center;
       margin: 0;
     }
@@ -22,8 +28,10 @@
   .trips-card-content {
     padding: 0;
     h4 {
-      font-size: 28px;
-      margin: 0;
+      font-size: 30px;
+      line-height: 21px;
+      text-indent: 0;
+      margin: 0 0 10px;
     }
     small{
       text-transform: uppercase;
@@ -37,7 +45,7 @@
   .flight-section, .housing-section, .total-section {
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding: 15px;
     border-top: 1px solid #ededed;
   }
@@ -45,25 +53,33 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    width: 100%;
-    p {
-      margin: 0;
-      line-height: 13px;
-      font-size: 13px;
+    align-items: center;
+    width: 60%;
+    div {
+      line-height: 12px;
+      font-size: 12px;
+      &:first-child, &:last-child {
+        flex: 1;
+      }
+      &:first-child {
+        text-align: right;
+      }
     }
   }
   .flight-price, .housing-price {
     display: flex;
-    flex-direction: column;
-    font-size: 20px;
-    line-height: 20px;
-    width: 27%;
-    text-align: center;
-    color: #aaa;
-    margin: 0 0 0 5%;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 0 0 0 15px;
+    width: 36%;
+    font-size: 16px;
+    color: #888;
     .btn-success {
+      margin: 0 0 0 8px;
       text-transform: uppercase;
-      line-height: 30px;
+      height: 40px;
+      line-height: 28px;
       font-size: 11px;
     }
   }
@@ -73,7 +89,6 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    padding-top: 15px;
     .save-trip {
       form {
         padding: 0;
@@ -81,12 +96,23 @@
     }
   }
   .total-price {
-    font-size: 30px;
-    line-height: 30px;
+    font-size: 22px;
+    line-height: 17px;
+    color: #2C2E34;
+    small {
+      color: #ccc;
+      font-size: 16px;
+    }
+  }
+  .btn {
+    span {
+      display: none;
+    }
   }
   .logo {
-    width: 30px;
-    height: 30px;
+    margin: 0 8px;
+    width: 25px;
+    height: 25px;
     background-size: cover;
   }
   .fa {
@@ -94,7 +120,7 @@
     cursor: pointer;
     font-size: 20px;
     &:hover {
-      color: #555;
+      color: $brand-primary;
     }
   }
 }
@@ -116,6 +142,10 @@
     }
     .trips-card-head {
       padding: 15px 30px;
+      h3 {
+        font-size: 28px;
+        line-height: 100%;
+      }
     }
     .trips-card-content {
       h4 {
@@ -140,7 +170,7 @@
       flex-direction: row;
       justify-content: space-between;
       width: 100%;
-      p {
+      div {
         margin: 0;
       }
     }
@@ -148,7 +178,9 @@
       margin: 0 0 0 8%;
       font-size: 30px;
       line-height: 45px;
+      flex-direction: column;
       .btn-success {
+        margin: 0;
         text-transform: uppercase;
         line-height: 30px;
         font-size: 11px;
@@ -170,6 +202,11 @@
     }
     .total-price {
       font-size: 40px;
+    }
+    .btn {
+      span {
+        display: inline;
+      }
     }
     .logo {
       width: 50px;

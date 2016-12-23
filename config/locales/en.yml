@@ -20,6 +20,11 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
-  iata_from: "Current location"
-  iata_to: "trip destination"
+  trips:
+    index:
+      iata_from: "your city"
+      iata_to: "trip place"
+      departure_date: "leaving"
+      return_date: "return"
+      entire_home: "Entire home"
+      no_result: "No result from this location or for this date"
