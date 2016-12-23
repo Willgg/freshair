@@ -1,4 +1,9 @@
 fr:
-  hello: "Hello world"
-  iata_from: "Origine"
-  iata_to: "Destination"
+  trips:
+    index:
+      iata_from: "de"
+      iata_to: "vers"
+      departure_date: "leaving on"
+      return_date: "return"
+      entire_home: "Entire home"
+      no_result: "Aucun résultat pour votre ville à ces dates"
