@@ -8,7 +8,7 @@
     </div>
     <div class="col-xs-12 col-sm-4 col-sm-offset-4">
         <div class="trips-card">
-        <%= form_tag('trips', method: 'get') do %>
+        <%= form_tag('trips', id: 'trips-index', method: 'get') do %>
           <div class="row">
             <div class="col-xs-12">
               <div class="form-group">
@@ -46,3 +46,17 @@
     </div>
   </div>
 </div>
+
+<% content_for(:after_js) do  %>
+  <script>
+    $('form').submit(function(e){
+      $('form select').val(function(i, val){
+        if (val.length <= 0){
+          $( this ).children( "option:first-child" ).text( "<%= t('.missing_field') %>" );
+          $( this ).parent( ".form-group" ).addClass( 'has-error' );
+        };
+      });
+      return false
+    });
+  </script>
+<% end %>
