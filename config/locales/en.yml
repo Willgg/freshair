@@ -21,6 +21,8 @@
 
 en:
   trips:
+    new:
+      missing_field: "Select an option"
     index:
       iata_from: "your city"
       iata_to: "trip place"

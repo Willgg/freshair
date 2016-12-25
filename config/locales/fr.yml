@@ -1,5 +1,7 @@
 fr:
   trips:
+    new:
+      missing_field: "Choisissez une option"
     index:
       iata_from: "de"
       iata_to: "vers"
