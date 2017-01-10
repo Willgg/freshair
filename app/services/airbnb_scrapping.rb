@@ -31,9 +31,10 @@ class AirbnbScrapping
       html_doc.search('span[data-pricerate]').each do |element|
         prices << element.text.slice(/[^\W]+/).to_f.round(2)
       end
-      avg_price = prices.inject(0, :+) / prices.length
-      puts '* Prices scraped: ' + avg_price.inspect
+      puts prices.inspect
     end
+    avg_price = (prices.inject(0, :+) / prices.length).round(4)
+    puts '* Average price scraped: ' + avg_price.inspect
     puts '* Price to convert =>' + avg_price.to_s + ' USD'
     converted_price = Currency::Fixer.new('USD', 'EUR', avg_price).convert_from_cache
     puts '* Price converted =>' + converted_price.round(4).to_s + ' EUR'
