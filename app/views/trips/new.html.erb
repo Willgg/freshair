@@ -53,6 +53,7 @@
       $('form select').val(function(i, val){
         if (val.length <= 0){
           $( this ).children( "option:first-child" ).text( "<%= t('.missing_field') %>" );
+          $( this ).children( "option:first-child" ).addClass( 'error' );
           $( this ).parent( ".form-group" ).addClass( 'has-error' );
         };
       });
