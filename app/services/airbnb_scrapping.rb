@@ -28,14 +28,14 @@ class AirbnbScrapping
     while prices.blank?
       html_file = open(uri, 'User-Agent' => Scraper::user_agents.sample)
       html_doc = Nokogiri::HTML(html_file)
-
-      html_doc.search('.avg-price .price').each do |element|
-        prices << element.text.scan(/[0-9]+/).join.to_f.round(2)
-        puts '* Prices scraped: ' + prices.inspect
+      html_doc.search('span[data-pricerate]').each do |element|
+        prices << element.text.slice(/[^\W]+/).to_f.round(2)
       end
+      avg_price = prices.inject(0, :+) / prices.length
+      puts '* Prices scraped: ' + avg_price.inspect
     end
-    puts '* Price to convert =>' + prices.first.to_s + ' USD'
-    converted_price = Currency::Fixer.new('USD', 'EUR', prices.first).convert_from_cache
+    puts '* Price to convert =>' + avg_price.to_s + ' USD'
+    converted_price = Currency::Fixer.new('USD', 'EUR', avg_price).convert_from_cache
     puts '* Price converted =>' + converted_price.round(4).to_s + ' EUR'
     return converted_price.round(4)
   end
