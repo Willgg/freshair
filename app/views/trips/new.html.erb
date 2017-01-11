@@ -50,14 +50,22 @@
 <% content_for(:after_js) do  %>
   <script>
     $('form').submit(function(e){
-      $('form select').val(function(i, val){
-        if (val.length <= 0){
+      var missing = 0;
+      $('form select').each( function(i, e){
+        if ($(this).val().length == 0) {
+          missing += 1
           $( this ).children( "option:first-child" ).text( "<%= t('.missing_field') %>" );
-          $( this ).children( "option:first-child" ).addClass( 'error' );
           $( this ).parent( ".form-group" ).addClass( 'has-error' );
         };
       });
-      return false
+      if (missing !== 0){
+        return false
+      };
+    });
+
+    $("select").on("click", function(e){
+      $(this).parent( ".has-error" ).children( "option:first-child" ).remove();
+      $(this).parent( ".has-error" ).removeClass( "has-error" );
     });
   </script>
 <% end %>
