@@ -26,10 +26,15 @@ class AirbnbScrapping
 
     prices = []
     while prices.blank?
-      html_file = open(uri, 'User-Agent' => Scraper::user_agents.sample)
-      html_doc = Nokogiri::HTML(html_file)
-      html_doc.search('span[data-pricerate]').each do |element|
-        prices << element.text.slice(/[^\W]+/).to_f.round(2)
+      tries = 3
+      begin
+        html_file = open(uri, 'User-Agent' => Scraper::user_agents.sample)
+        html_doc = Nokogiri::HTML(html_file)
+        html_doc.search('span[data-pricerate]').each do |element|
+          prices << element.text.slice(/[^\W]+/).to_f.round(2)
+        end
+      rescue
+        retry if (tries -= 1) > 0
       end
       puts prices.inspect
     end
