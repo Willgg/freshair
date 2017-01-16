@@ -24,6 +24,9 @@ gem 'sidekiq'
 gem 'sidekiq-failures'
 
 gem 'open_uri_redirections'
+git 'https://github.com/apixu/apixu-ruby' do
+  gem 'apixu'
+end
 
 group :development, :test do
   gem 'binding_of_caller'
