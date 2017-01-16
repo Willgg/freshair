@@ -7,6 +7,10 @@ class TripsController < ApplicationController
     options[:people] = params[:people] if params[:people]
     @flights = Trip.find_cheapest(options)
     @trip    = Trip.new
+    @weather = Weather.new(JSON.parse($redis.get('weather')))
+    cities = []
+    @flights.each { |r| cities << r['destination'] }
+    @weather = @weather.avg_temperature(cities, Date.parse(options[:departure_date]), Date.parse(options[:departure_date]) + options[:duration].to_i.days)
   end
 
   def new
