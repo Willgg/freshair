@@ -16,13 +16,29 @@
   }
   .trips-card-head {
     border-radius: 8px 8px 0 0;
-    padding: 15px;
+    display: flex;
     h3 {
       font-size: 22px;
       line-height: 17px;
       font-weight: normal;
       text-align: center;
       margin: 0;
+    }
+    ul.forecast {
+      display: flex;
+      list-style-type: none;
+      text-align: center;
+      li {
+        padding: 0 10px;
+      }
+      img {
+        width: 50px;
+        height: 50px;
+      }
+      h4 {
+        margin: 0;
+        font-size: 15px;
+      }
     }
   }
   .trips-card-content {
@@ -153,7 +169,6 @@
       }
     }
     .trips-card-head {
-      padding: 15px 30px;
       h3 {
         font-size: 28px;
         line-height: 100%;

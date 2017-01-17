@@ -1,32 +1,34 @@
 class Weather
 
-  attr_reader :temperatures
+  attr_reader :forecast
 
   def initialize(data)
-    @temperatures = data
-  end
-
-  def sort_by_temperature
-    @temperatures.sort_by { |_k, v| (v.values.reduce(:+) / v.values.size) }
+    @forecast = data
   end
 
   def only_for(cities)
-    @temperatures.select { |k, v| cities.include?(k) }
+    @forecast.select { |k, v| cities.include?(k) }
   end
 
-  def avg_temperature(cities, start_date, end_date)
-    sum = 0
-    count = 0
-    new_h = Hash.new
-    only_for(cities).each_pair do |city, data|
-      data.each_pair do |date, value|
-        unless Date.parse(date) < start_date || Date.parse(date) > end_date
-          sum += value['avgtemp_c']
-          count += 1
-        end
-      end
-      new_h[city] = (sum / count).round(1)
+  def filter_forecast(cities, start_date, end_date)
+    only_for(cities).each_pair do |city, dates|
+      dates.keep_if { |date, temps| (start_date..end_date).include? Date.parse(date) }
     end
-    return new_h
+  end
+
+  def avg_min_max_temp(cities, start_date, end_date)
+    sum_min, sum_max, count = 0, 0, 0
+    minified = Hash.new
+    dataset = filter_forecast(cities, start_date, end_date)
+    dataset.each_pair do |city, dates|
+      dates.each_pair do |date, value|
+        sum_min += value['mintemp_c']
+        sum_max += value['maxtemp_c']
+        count += 1
+      end
+      minified[city] = { 'mintemp_c': (sum_min / count).round(1),
+                         'maxtemp_c': (sum_max / count).round(1) }
+    end
+    return minified
   end
 end
