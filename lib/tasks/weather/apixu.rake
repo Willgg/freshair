@@ -19,7 +19,7 @@ namespace :weather do
           strfdate = date.strftime('%Y-%m-%d')
           fc_days = forecast['forecast']['forecastday']
           fc_date = fc_days.select { |day| day['date'] == strfdate }.first
-          weather[k][strfdate] = fc_date['day'].slice('avgtemp_c', 'condition') unless fc_date.nil?
+          weather[k][strfdate] = fc_date['day'].slice('maxtemp_c', 'mintemp_c', 'condition') unless fc_date.nil?
         end
       end
       $redis.set('weather', weather.to_json)

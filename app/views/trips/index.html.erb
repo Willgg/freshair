@@ -13,8 +13,24 @@
         <% count += 1 %>
         <div class="trips-card inactive" id="flight-<%= count %>" %>
           <div class="trips-card-head">
-            <h3><%= Airport.find_by(iata: flight['destination']).city.name %>
-              <small><%= @weather[flight['destination']] %>°C</small></h3>
+            <div class="title-section">
+              <h3><%= Airport.find_by(iata: flight['destination']).city.name %></h3>
+              <div class="weather-section">
+                <ul class="forecast">
+                  <% @weather[flight['destination']].each do |key, value| %>
+                    <li>
+                      <img src="http:<%= value['condition']['icon'] %>"
+                           alt="<%= value['condition']['text'] %>"
+                           title="<%= value['condition']['text'] %>" />
+                      <h4>
+                        <%= value['maxtemp_c'].round %>°
+                        <small><%= value['mintemp_c'].round %>°</small>
+                      </h4>
+                    </li>
+                  <% end %>
+                </ul>
+              </div>
+            </div>
           </div>
           <div class="trips-card-content">
             <div class="flight-section">
