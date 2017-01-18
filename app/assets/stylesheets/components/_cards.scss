@@ -17,7 +17,8 @@
   .trips-card-head {
     border-radius: 8px 8px 0 0;
     .title-section {
-      border: none
+      border: none;
+      padding-bottom: 10px;
     }
     h3 {
       font-size: 22px;
@@ -42,6 +43,9 @@
       h4 {
         margin: 0;
         font-size: 15px;
+        color: #2C2E34;
+        font-weight: normal;
+        font-family: 'Open sans', 'sans serif';
       }
       .icon {
         width: 100%;
@@ -103,7 +107,7 @@
     margin: 0 0 0 15px;
     width: 36%;
     font-size: 16px;
-    color: #888;
+    color: #999;
     .btn-success {
       margin: 0 0 0 8px;
       text-transform: uppercase;
@@ -152,7 +156,7 @@
     align-self: flex-start;
     margin: 0 10px;
     width: 25px;
-    height: 25px;
+    height: 24px;
     background-size: cover;
   }
   .fa {
