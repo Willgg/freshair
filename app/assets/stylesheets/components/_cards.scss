@@ -16,7 +16,9 @@
   }
   .trips-card-head {
     border-radius: 8px 8px 0 0;
-    display: flex;
+    .title-section {
+      border: none
+    }
     h3 {
       font-size: 22px;
       line-height: 17px;
@@ -25,19 +27,29 @@
       margin: 0;
     }
     ul.forecast {
+      width: 100%;
       display: flex;
+      justify-content: flex-end;
       list-style-type: none;
       text-align: center;
+      margin: 0;
+      padding: 0;
       li {
-        padding: 0 10px;
-      }
-      img {
-        width: 50px;
-        height: 50px;
+        &:last-child{
+          padding-right: 0;
+        }
       }
       h4 {
         margin: 0;
         font-size: 15px;
+      }
+      .icon {
+        width: 100%;
+        height: 26px;
+        margin: 0 0 3px 0;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: 100%;
       }
     }
   }
@@ -58,14 +70,14 @@
   .trips-card-footer {
     border-radius: 0 0 8px 8px;
   }
-  .flight-section, .housing-section, .total-section {
+  .title-section, .flight-section, .housing-section, .total-section {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     padding: 15px;
     border-top: 1px solid #ededed;
   }
-  .flight-details, .housing-details {
+  .title-section h3, .flight-details, .housing-details {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -83,7 +95,7 @@
       }
     }
   }
-  .flight-price, .housing-price {
+  .weather-details, .flight-price, .housing-price {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -188,7 +200,7 @@
     .trips-card-footer {
       border-radius: 0 0 8px 8px;
     }
-    .flight-section, .housing-section, .total-section {
+    .title-section, .flight-section, .housing-section, .total-section {
       justify-content: space-between;
       padding: 15px 30px;
     }
