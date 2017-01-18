@@ -15,16 +15,16 @@
           <div class="trips-card-head">
             <div class="title-section">
               <h3><%= Airport.find_by(iata: flight['destination']).city.name %></h3>
-              <div class="weather-section">
+              <div class="weather-details">
                 <ul class="forecast">
                   <% @weather[flight['destination']].each do |key, value| %>
-                    <li>
-                      <img src="http:<%= value['condition']['icon'] %>"
-                           alt="<%= value['condition']['text'] %>"
-                           title="<%= value['condition']['text'] %>" />
+                    <li title="<%= value['condition']['text'] %>" style="width: <%= 100 / @weather[flight['destination']].size %>%">
+                      <div class="icon"
+                           style="background-image: url('http:<%= value['condition']['icon'] %>')">
+                      </div>
                       <h4>
                         <%= value['maxtemp_c'].round %>°
-                        <small><%= value['mintemp_c'].round %>°</small>
+                        <!-- <small><%= value['mintemp_c'].round %>°</small> -->
                       </h4>
                     </li>
                   <% end %>
