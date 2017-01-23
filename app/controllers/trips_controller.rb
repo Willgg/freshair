@@ -9,7 +9,7 @@ class TripsController < ApplicationController
     @trip = Trip.new
     cities = []
     @flights.each { |r| cities << r['destination'] }
-    @weather = Weather.new(JSON.parse($redis.get('weather')))
+    @weather = Weather::Apixu.new(JSON.parse($redis.get('weather')))
     @weather = @weather.filter_forecast(cities, Date.parse(options[:departure_date]), Date.parse(options[:departure_date]) + options[:duration].to_i.days)
   end
 
