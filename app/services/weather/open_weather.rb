@@ -17,15 +17,22 @@ module Weather
       @forecast = JSON.parse(openweather_serialized)
     end
 
-    # def cache(var)
-    #   if self.class.instance_methods(false).include?(var) && !send(var).empty?
-    #     $redis.set(@city.to_s, send(var))
-    #   else
-    #     false
-    #   end
-    # end
+    def self.filtered_forecast(start_date, end_date, cities=nil)
+      data = cities.empty? ? get_cache : only_for(cities)
+      data.each_pair do |city, dates|
+        dates.keep_if { |date, temp| (start_date..end_date).include? Date.parse(date) }
+      end
+    end
 
-    def self.cache(airports)
+    def self.only_for(cities)
+      get_cache.select { |k, v| cities.include?(k) }
+    end
+
+    def self.get_cache
+      JSON.parse($redis.get('weather'))
+    end
+
+    def self.set_cache(airports)
       weather = Hash.new
       airports.each do |k|
         city = Airport.find_by(iata: k).city
