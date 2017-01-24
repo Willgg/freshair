@@ -20,7 +20,7 @@
                   <% @weather[flight['destination']].each do |key, value| %>
                     <li title="<%= value['weather'][0]['description'] %>" style="width: <%= 100 / @weather[flight['destination']].size %>%">
                       <div class="icon"
-                           style="background-image: url('http://openweathermap.org/img/w/<%= value['weather'][0]['icon'] %>.png')">
+                           style="background-image: url('<%= weather_icon(value['weather'][0]['icon']) %>')">
                       </div>
                       <h4>
                         <%= value['temp']['day'].round %>°
@@ -35,7 +35,7 @@
             <div class="flight-section">
               <div class="flight-details">
                 <div>
-                  <h4><%= params[:iata_code] %></h4>
+                  <h4><%= params[:iata] %></h4>
                   <p><small><%= t('.departure_date', default: 'leaving on') %></small></p>
                   <p><%= flight['departure_date'].to_date.strftime('%a %d %b') %></p>
                 </div>
