@@ -11,7 +11,7 @@
         <% count = 0 %>
         <% @flights.each do |flight| %>
         <% count += 1 %>
-        <div class="trips-card inactive" id="flight-<%= count %>" %>
+        <div class="trips-card bg-white inactive" id="flight-<%= count %>" %>
           <div class="trips-card-head">
             <div class="title-section">
               <h3><%= Airport.find_by(iata: flight['destination']).city.name %></h3>

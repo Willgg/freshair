@@ -1,11 +1,14 @@
 .trips-card{
-  background: #FFF;
   border-radius: 4px;
   margin-bottom: 20px;
   form {
     padding: 30px;
     select {
-      background-color: #fff;
+      background-color: rgba(255, 255, 255, 0.30);
+      cursor: pointer;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.40)
+      }
     }
     label {
       display: none;
@@ -172,14 +175,9 @@
 @media only screen and (min-width: 768px) {
 
   .trips-card{
-    background: #FFF;
-    border-radius: 8px;
     margin-bottom: 30px;
     form {
       padding: 30px;
-      select {
-        background-color: #fff;
-      }
       label {
         display: none;
       }
@@ -208,6 +206,19 @@
       justify-content: space-between;
       padding: 15px 30px;
     }
+    .title-section {
+      ul.forecast {
+        li {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+        }
+        h4 {
+          font-size: 20px;
+        }
+      }
+    }
     .flight-details, .housing-details {
       display: flex;
       flex-direction: row;
@@ -219,8 +230,7 @@
     }
     .flight-price, .housing-price {
       margin: 0 0 0 8%;
-      font-size: 30px;
-      line-height: 45px;
+      font-size: 24px;
       flex-direction: column;
       .btn-success {
         margin: 0;
@@ -238,6 +248,7 @@
     .total-section {
       padding-top: 15px;
       padding-bottom: 30px;
+      align-items: center;
       .save-trip {
         form {
           padding: 0;
@@ -245,7 +256,8 @@
       }
     }
     .total-price {
-      font-size: 40px;
+      font-size: 36px;
+      line-height: 26px;
     }
     .btn {
       span {
