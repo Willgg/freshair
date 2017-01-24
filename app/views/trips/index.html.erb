@@ -65,7 +65,7 @@
                 </div>
               </div>
               <div class="housing-price">
-                <span><%= flight['airbnb'][params[:people]].to_i * params[:duration].to_i %>&euro;</span>
+                <span><%= flight['airbnb'][params[:people]].to_i * params[:days].to_i %>&euro;</span>
                 <a class="btn btn-success"
                    href="https://www.airbnb.fr/s/<%= "#{Airport.find_by(iata: flight['destination']).city.clean_to_str}" %>?adults=<%= params[:people] %>&checkin=<%= flight["departure_date"].to_date.strftime('%d/%m/%Y') %>&checkout=<%= flight["return_date"].to_date.strftime('%d/%m/%Y') %>&room_types%5B%5D=Entire%20home%2Fapt" target="_blank">Book <span>now</span></a>
               </div>
@@ -76,9 +76,9 @@
              <!--  <div class="share-trip">
                 <i class="fa fa-heart-o" aria-hidden="true"></i>
               </div> -->
-              <h4>Total <small>pour <%= params[:duration].to_i + 1 %> jours</small></h4>
+              <h4>Total <small>pour <%= params[:days].to_i + 1 %> jours</small></h4>
               <div class="total-price">
-                <%= (flight['airbnb'][params[:people]].to_i * params[:duration].to_i) + flight['price'].to_i %>&euro;<small>/pers</small>
+                <%= (flight['airbnb'][params[:people]].to_i * params[:days].to_i) + flight['price'].to_i %>&euro;<small>/pers</small>
               </div>
             </div>
           </div>
