@@ -1,16 +1,18 @@
 class TripsController < ApplicationController
   def index
-    options = {}
-    options[:origin] = params[:iata_code] if params[:iata_code]
-    options[:departure_date] = params[:departure_date] if params[:departure_date]
-    options[:duration] = params[:duration] if params[:duration]
-    options[:people] = params[:people] if params[:people]
-    @flights = Trip.find_cheapest(options)
+    opts = {}
+    opts[:origin] = params[:iata] if params[:iata]
+    opts[:departure_date] = params[:departure] if params[:departure]
+    opts[:duration] = params[:days] if params[:days]
+    opts[:people] = params[:people] if params[:people]
+    @flights = Trip.find_cheapest(opts)
     @trip = Trip.new
     cities = []
     @flights.each { |r| cities << r['destination'] }
-    @weather = Weather.new(JSON.parse($redis.get('weather')))
-    @weather = @weather.filter_forecast(cities, Date.parse(options[:departure_date]), Date.parse(options[:departure_date]) + options[:duration].to_i.days)
+    @weather = Weather::OpenWeather.filtered_forecast(
+                 Date.parse(params[:departure]),
+                 Date.parse(params[:departure]) + params[:days].to_i.days,
+                 cities)
   end
 
   def new

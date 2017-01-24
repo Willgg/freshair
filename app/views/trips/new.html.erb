@@ -12,20 +12,20 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="form-group">
-                <%= label_tag(:iata_code, "Leaving from", style: 'display: none;') %>
-                <%= select_tag(:iata_code, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }), prompt: 'Leaving from', class: 'form-control' ) %>
+                <%= label_tag(:iata, "Leaving from", style: 'display: none;') %>
+                <%= select_tag(:iata, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }), prompt: 'Leaving from', class: 'form-control' ) %>
               </div>
             </div>
             <div class="col-xs-12">
               <div class="form-group">
-                <%= label_tag(:departure_date, "Leaving on") %>
-                <%= select_tag(:departure_date, options_for_select(@dates.map { |date| [date.strftime('%A %d %B'), date] }), class: 'form-control', prompt: 'Departure day' ) %>
+                <%= label_tag(:departure, "Leaving on") %>
+                <%= select_tag(:departure, options_for_select(@dates.map { |date| [date.strftime('%A %d %B'), date] }), class: 'form-control', prompt: 'Departure day' ) %>
               </div>
             </div>
             <div class="col-xs-12 col-sm-6">
               <div class="form-group">
-                <%= label_tag(:duration, "Days") %>
-                <%= select_tag(:duration,
+                <%= label_tag(:days, "Days") %>
+                <%= select_tag(:days,
                     options_for_select(Scraper::DURATIONS.map { |d| [(d + 1).to_s + ' days', d] }),
                     class: 'form-control', prompt: 'Days') %>
               </div>

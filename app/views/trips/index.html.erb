@@ -18,13 +18,12 @@
               <div class="weather-details">
                 <ul class="forecast">
                   <% @weather[flight['destination']].each do |key, value| %>
-                    <li title="<%= value['condition']['text'] %>" style="width: <%= 100 / @weather[flight['destination']].size %>%">
+                    <li title="<%= value['weather'][0]['description'] %>" style="width: <%= 100 / @weather[flight['destination']].size %>%">
                       <div class="icon"
-                           style="background-image: url('http:<%= value['condition']['icon'] %>')">
+                           style="background-image: url('http://openweathermap.org/img/w/<%= value['weather'][0]['icon'] %>.png')">
                       </div>
                       <h4>
-                        <%= value['maxtemp_c'].round %>°
-                        <!-- <small><%= value['mintemp_c'].round %>°</small> -->
+                        <%= value['temp']['day'].round %>°
                       </h4>
                     </li>
                   <% end %>
