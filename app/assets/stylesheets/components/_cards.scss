@@ -39,6 +39,10 @@
       margin: 0;
       padding: 0;
       li {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
         &:last-child{
           padding-right: 0;
         }
@@ -51,7 +55,7 @@
         font-family: 'Open sans', 'sans serif';
       }
       .icon {
-        width: 100%;
+        width: 30px;
         height: 26px;
         margin: 0 0 3px 0;
         background-position: 50% 50%;
@@ -213,11 +217,21 @@
           flex-direction: row;
           justify-content: space-between;
           align-items: center;
+          padding: 0 5px 0 0;
+          &:last-child {
+            padding-right: 0;
+          }
         }
         h4 {
-          font-size: 20px;
+          font-size: 18px;
+        }
+        .icon {
+
         }
       }
+    }
+    .weather-details{
+      width: 50%;
     }
     .flight-details, .housing-details {
       display: flex;
@@ -242,7 +256,6 @@
     .housing-section {
       .logo {
         align-self: center;
-        // margin: 0 32px;
       }
     }
     .total-section {
