@@ -23,7 +23,10 @@ gem 'redis-rack-cache'
 gem 'sidekiq'
 gem 'sidekiq-failures'
 
+gem 'mixpanel-ruby'
+
 gem 'open_uri_redirections'
+
 git 'https://github.com/apixu/apixu-ruby' do
   gem 'apixu'
 end
@@ -35,8 +38,6 @@ group :development, :test do
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'spring'
-
-
 end
 
 gem 'rails_12factor', group: :production
