@@ -92,6 +92,7 @@ GEM
     mime-types-data (3.2016.0521)
     mini_portile2 (2.1.0)
     minitest (5.10.1)
+    mixpanel-ruby (2.1.0)
     multi_json (1.12.1)
     netrc (0.11.0)
     nokogiri (1.6.8.1)
@@ -224,6 +225,7 @@ DEPENDENCIES
   font-awesome-sass
   jbuilder (~> 2.0)
   jquery-rails
+  mixpanel-ruby
   open_uri_redirections
   pg
   pry-byebug
