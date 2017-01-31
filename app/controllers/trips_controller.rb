@@ -18,6 +18,7 @@ class TripsController < ApplicationController
   def new
     @trip = Trip.new
     @dates = Scraper::dates
+    @mixpanel_tracker.track('visitor', 'Home page')
   end
 
   private

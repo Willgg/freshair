@@ -1,3 +1,19 @@
+en:
+  trips:
+    new:
+      missing_field: "Select an option"
+      label_from: "Leaving from"
+      label_date: "Departure day"
+      label_nbdays: "Days"
+      label_people: "People"
+      submit: "Let's get some Freshair"
+    index:
+      departure_date: "leaving"
+      return_date: "return"
+      guests: "Guests"
+      entire_home: "Entire home"
+      no_result: "No result from this location or for this date"
+
 # Files in the config/locales directory are used for internationalization
 # and are automatically loaded by Rails. If you want to use locales other
 # than English, add the necessary files in this directory.
@@ -18,15 +34,3 @@
 #
 # To learn more, please read the Rails Internationalization guide
 # available at http://guides.rubyonrails.org/i18n.html.
-
-en:
-  trips:
-    new:
-      missing_field: "Select an option"
-    index:
-      iata_from: "your city"
-      iata_to: "trip place"
-      departure_date: "leaving"
-      return_date: "return"
-      entire_home: "Entire home"
-      no_result: "No result from this location or for this date"

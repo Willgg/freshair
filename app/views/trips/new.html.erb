@@ -12,32 +12,32 @@
           <div class="row">
             <div class="col-xs-12">
               <div class="form-group">
-                <%= label_tag(:iata, "Leaving from", style: 'display: none;') %>
-                <%= select_tag(:iata, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }), prompt: 'Leaving from', class: 'form-control' ) %>
+                <%= label_tag(:iata, t('.label_from'), style: 'display: none;') %>
+                <%= select_tag(:iata, options_for_select(AmadeusService.list_origins('EUR', 'GBP').values.flatten.map!{ |ap| [Airport.find_by(iata: ap).city.name, ap] }), prompt: t('.label_from'), class: 'form-control' ) %>
               </div>
             </div>
             <div class="col-xs-12">
               <div class="form-group">
-                <%= label_tag(:departure, "Leaving on") %>
-                <%= select_tag(:departure, options_for_select(@dates.map { |date| [date.strftime('%A %d %B'), date] }), class: 'form-control', prompt: 'Departure day' ) %>
+                <%= label_tag(:departure, t('.label_date')) %>
+                <%= select_tag(:departure, options_for_select(@dates.map { |date| [date.strftime('%A %d %B'), date] }), class: 'form-control', prompt: t('.label_date') ) %>
               </div>
             </div>
             <div class="col-xs-12 col-sm-6">
               <div class="form-group">
-                <%= label_tag(:days, "Days") %>
+                <%= label_tag(:days, t('.label_nbdays')) %>
                 <%= select_tag(:days,
                     options_for_select(Scraper::DURATIONS.map { |d| [(d + 1).to_s + ' days', d] }),
-                    class: 'form-control', prompt: 'Days') %>
+                    class: 'form-control', prompt: t('.label_nbdays')) %>
               </div>
             </div>
             <div class="col-xs-12 col-sm-6">
               <div class="form-group">
-                <%= label_tag(:people, "People") %>
-                <%= select_tag(:people, options_for_select(Scraper::PEOPLE.map { |d| [d.to_s + ' people', d] }), class: 'form-control', prompt: 'People') %>
+                <%= label_tag(:people, t('.label_people')) %>
+                <%= select_tag(:people, options_for_select(Scraper::PEOPLE.map { |d| [d.to_s + ' people', d] }), class: 'form-control', prompt: t('.label_people')) %>
               </div>
             </div>
             <div class="col-xs-12">
-              <%= submit_tag("Let's get some Freshair", class: 'btn btn-success btn-block') %>
+              <%= submit_tag( t('.submit'), class: 'btn btn-success btn-block') %>
             </div>
           </div>
         <% end %>

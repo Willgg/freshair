@@ -2,10 +2,14 @@ fr:
   trips:
     new:
       missing_field: "Choisissez une option"
+      label_from: "Au départ de"
+      label_date: "A partir du"
+      label_nbdays: "Durée"
+      label_people: "Personnes"
+      submit: "Trouver des plans weekend !"
     index:
-      iata_from: "de"
-      iata_to: "vers"
-      departure_date: "leaving on"
-      return_date: "return"
-      entire_home: "Entire home"
-      no_result: "Aucun résultat pour votre ville à ces dates"
+      departure_date: "Départ"
+      return_date: "Retour"
+      guests: "Invité"
+      entire_home: "Logement entier"
+      no_result: "Aucun résultat depuis votre ville à ces dates"
