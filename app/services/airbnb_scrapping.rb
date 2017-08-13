@@ -19,8 +19,8 @@ class AirbnbScrapping
   def scrap_price
     uri = @url + clean(@city.name) + '--' + clean(@city.country)
     uri = uri + '?' + 'adults=' + @adults.to_s
-    uri = uri + '&' + 'checkin=' + CGI.escape(@checkin_date.strftime('%d/%m/%Y'))
-    uri = uri + '&' + 'checkout=' + CGI.escape(@checkout_date.strftime('%d/%m/%Y'))
+    uri = uri + '&' + 'checkin=' + CGI.escape(@checkin_date.strftime('%Y-%m-%d'))
+    uri = uri + '&' + 'checkout=' + CGI.escape(@checkout_date.strftime('%Y-%m-%d'))
     uri = uri + '&room_types%5B%5D=Entire%20home%2Fapt' if @entire_home
     puts 'URL: ' + uri
 
@@ -30,8 +30,8 @@ class AirbnbScrapping
       begin
         html_file = open(uri, 'User-Agent' => Scraper::user_agents.sample)
         html_doc = Nokogiri::HTML(html_file)
-        html_doc.search('span[data-pricerate]').each do |element|
-          prices << element.text.slice(/[^\W]+/).to_f.round(2)
+        html_doc.css(css_selector).each_with_index do |element,i|
+          prices << element.text.slice(/[^\W]+/).to_f.round(2) if i.odd?
         end
       rescue
         retry if (tries -= 1) > 0
@@ -51,5 +51,9 @@ class AirbnbScrapping
   def clean(name)
     name = name.gsub(/\s/, '-')
     name = name.gsub(/St./, 'Saint')
+  end
+
+  def css_selector
+    '.ellipsized_1iurgbx .inline_g86r3e span:first-child span:first-child span:last-child'
   end
 end
