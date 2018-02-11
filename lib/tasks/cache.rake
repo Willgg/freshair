@@ -3,7 +3,7 @@ namespace :cache do
   task all: :environment do
     Rake::Task["currency:fixer:cache"].invoke
     Rake::Task["currency:layer:cache"].invoke
-    Rake::Task['airbnb:cache_all'].invoke
     Rake::Task['amadeus:cache_all'].invoke
+    Rake::Task['airbnb:cache_all'].invoke
   end
 end
