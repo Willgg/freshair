@@ -172,7 +172,7 @@ GEM
       redis-actionpack (~> 5.0.0)
       redis-activesupport (~> 5.0.0)
       redis-store (~> 1.2.0)
-    redis-store (1.2.0)
+    redis-store (1.4.0)
       redis (>= 2.2)
     rest-client (2.0.0)
       http-cookie (>= 1.0.2, < 2.0)
